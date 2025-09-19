@@ -1,0 +1,76 @@
+You are reviewing a Python CLI project.
+The goal is to turn this into a high-functioning, extensible CLI app for business lead generation.
+
+Here’s how the app should work:
+
+Configuration via text files
+
+providers.txt → contains provider names and API keys (e.g., Yelp, Google).
+
+email_finders.txt → contains email finder API keys (e.g., Hunter.io, Snov.io).
+
+proxies.txt → contains proxy URLs. If this file is empty, skip proxy use.
+
+queries.txt → contains search queries.
+
+If any file is missing or incorrectly formatted, show a useful, user-friendly error in the CLI.
+
+Provider search phase
+
+Loop through each provider (YelpProvider, GoogleProvider, etc.).
+
+Fetch companies for each query.
+
+Save the results.
+
+If provider = Yelp, get the company’s URL, extract its domain, and save to a domains.txt.
+
+If there’s an error with any provider, log the error clearly but move on to the next one.
+
+Email finder phase
+
+After a configurable delay (e.g., wait X seconds or minutes), run all enabled email finders against the domains list.
+
+Use proxies if available.
+
+If one finder fails, move to the next one.
+
+CLI features
+
+Use beautiful logging (rich/typer/loguru) instead of plain prints.
+
+Clear separation of concerns:
+
+Config loading
+
+Providers (search)
+
+Email finders
+
+Output saving
+
+Robust but not over-engineered.
+
+Extensibility
+
+Should be easy to add new providers (just drop in a new class extending BaseProvider).
+
+Same for email finders (extend BaseFinder).
+
+Minimal changes required to integrate new ones.
+
+🔹 Ask Replit AI to Suggest:
+
+Improvements to code structure (folders, modules, classes).
+
+Improvements to error handling (graceful fallbacks, clearer errors).
+
+Improvements to config management (YAML/JSON instead of multiple TXT files? or keep TXT but validate properly).
+
+How to integrate a scheduler/delay system for email finders.
+
+How to integrate logging libraries like rich or loguru for beautiful CLI output.
+
+Suggestions for making it more testable (unit tests/mocking API responses).
+
+How to package it into a proper CLI app with Typer/Click.
