@@ -16,15 +16,15 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Email Finder"
+args = "Full Lead Generation"
 
 [[workflows.workflow]]
-name = "Email Finder"
+name = "Full Lead Generation"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "python main.py"
+args = "python run_leadgen.py"
 
 [workflows.workflow.metadata]
 outputType = "console"
