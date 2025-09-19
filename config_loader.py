@@ -80,11 +80,10 @@ class Config:
             return lines
         
         
-    if __name__ == "__main__":
-        # Example usage (for debugging)
-        base = "config"
-
-        print("Providers:", load_providers(os.path.join(base, "providers.txt")))
-        print("Email Finders:", load_email_finders(os.path.join(base, "email_finders.txt")))
-        print("Proxies:", load_proxies(os.path.join(base, "proxies.txt")))
-        print("Queries:", load_queries(os.path.join(base, "queries.txt")))
+if __name__ == "__main__":
+    # Example usage (for debugging)
+    config = Config()
+    print("Providers:", config.providers)
+    print("Email Finders:", config.email_finders)
+    print("Proxies:", config.proxies)
+    print("Queries:", config.queries)

@@ -33,8 +33,8 @@ class Main:
             raise ValueError(f"Unknown provider: {name}")
 
         if name.lower() == "google":
-            # google requires CX id
-            cx = self.config.get("google_cx", "")
+            # google requires CX id - for now use empty string as default
+            cx = ""  # TODO: Add google_cx to config if needed
             provider_config = {"num": 5}
             return self.provider_map[name.lower()](api_key, cx, config=provider_config)
 
