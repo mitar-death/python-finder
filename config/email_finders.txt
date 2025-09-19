@@ -1,2 +1,1 @@
-hunter=HUNTER_API_KEY_1
-snov=SNOV_API_KEY_1
+hunter=481f0a1015c0c4bfe4cf1bb4c173650204afb1c2

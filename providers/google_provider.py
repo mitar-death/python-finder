@@ -1,34 +1,40 @@
-from providers.base_provider import BaseProvider
 import requests
+from .base_provider import BaseProvider
 
 class GoogleProvider(BaseProvider):
-    BASE_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json"
- 
-    def __init__(self, api_key:str):
+    BASE_URL = "https://www.googleapis.com/customsearch/v1"
+
+    def __init__(self, api_key: str, cx: str, config: dict = None):
         super().__init__(api_key)
-        
-        
-    def search(self,query,providers, proxies):
+        self.cx = cx
+        self.config = config or {"num": 5}  # default 5 results
+
+    def search(self, query: str, proxy: dict = None):
         params = {
-            "query": query,
+            "q": query,
             "key": self.api_key,
-            "limit": providers["limit"],
+            "cx": self.cx,
+            "num": self.config.get("num", 5),
         }
 
-        response = requests.get(self.BASE_URL, params=params, proxies=proxies, timeout=10)
-        
+        proxies = proxy if proxy else None
+
+        response = requests.get(
+            self.BASE_URL, params=params, proxies=proxies, timeout=10
+        )
+
         if response.status_code != 200:
             raise Exception(f"Google API request failed with status code {response.status_code}")
-    
-        places = response.json().get("results", [])
+
+        items = response.json().get("items", [])
+
         results = []
-        for p in places: 
+        for item in items:
             results.append({
-                "name": p["name"],
-                "url": None,
-                "domain": p["name"].split()[0].lower(),
-                "address": p["formatted_address"],
-                "phone": None
+                "title": item.get("title"),
+                "link": item.get("link"),
+                "snippet": item.get("snippet"),
+                "displayLink": item.get("displayLink"),
             })
-            
+
         return results

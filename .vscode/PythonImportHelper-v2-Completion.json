@@ -85,22 +85,6 @@
         "documentation": {}
     },
     {
-        "label": "BaseProvider",
-        "importPath": "providers.base_provider",
-        "description": "providers.base_provider",
-        "isExtraImport": true,
-        "detail": "providers.base_provider",
-        "documentation": {}
-    },
-    {
-        "label": "BaseProvider",
-        "importPath": "providers.base_provider",
-        "description": "providers.base_provider",
-        "isExtraImport": true,
-        "detail": "providers.base_provider",
-        "documentation": {}
-    },
-    {
         "label": "Path",
         "importPath": "pathlib",
         "description": "pathlib",
@@ -279,7 +263,7 @@
         "kind": 6,
         "importPath": "providers.google_provider",
         "description": "providers.google_provider",
-        "peekOfCode": "class GoogleProvider(BaseProvider):\n    BASE_URL = \"https://maps.googleapis.com/maps/api/place/textsearch/json\"\n    def __init__(self, api_key:str):\n        super().__init__(api_key)\n    def search(self,query,providers, proxies):\n        params = {\n            \"query\": query,\n            \"key\": self.api_key,\n            \"limit\": providers[\"limit\"],\n        }",
+        "peekOfCode": "class GoogleProvider(BaseProvider):\n    BASE_URL = \"https://www.googleapis.com/customsearch/v1\"\n    def __init__(self, api_key: str, cx: str, config: dict = None):\n        super().__init__(api_key)\n        self.cx = cx\n        self.config = config or {\"num\": 5}  # default 5 results\n    def search(self, query: str, proxy: dict = None):\n        params = {\n            \"q\": query,\n            \"key\": self.api_key,",
         "detail": "providers.google_provider",
         "documentation": {}
     },
@@ -288,7 +272,7 @@
         "kind": 6,
         "importPath": "providers.yelp_provider",
         "description": "providers.yelp_provider",
-        "peekOfCode": "class YelpProvider(BaseProvider):\n    BASE_URL = \"https://api.yelp.com/v3/businesses/search\"\n    def __init__(self, api_key: str):\n        super().__init__(api_key)\n        self.headers = {\"Authorization\": f\"Bearer {self.api_key}\"}\n    def search(self, query, provider, proxy):\n        parms = {\n            \"term\": query,\n            \"location\": provider[\"location\"],\n            \"limit\": provider[\"limit\"],",
+        "peekOfCode": "class YelpProvider(BaseProvider):\n    BASE_URL = \"https://api.yelp.com/v3/businesses/search\"\n    def __init__(self, api_key: str, config: dict = None):\n        super().__init__(api_key)\n        self.headers = {\"Authorization\": f\"Bearer {self.api_key}\"}\n        # store provider-specific settings (like location, limit)\n        self.config = config or {\"location\": \"United States\", \"limit\": 5}\n    def search(self, query: str, proxy: dict = None):\n        params = {\n            \"term\": query,",
         "detail": "providers.yelp_provider",
         "documentation": {}
     },

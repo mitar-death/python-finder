@@ -31,6 +31,17 @@ class Main:
     def get_provider_instance(self, name, api_key):
         if name.lower() not in self.provider_map:
             raise ValueError(f"Unknown provider: {name}")
+
+        if name.lower() == "google":
+            # google requires CX id
+            cx = self.config.get("google_cx", "")
+            provider_config = {"num": 5}
+            return self.provider_map[name.lower()](api_key, cx, config=provider_config)
+
+        if name.lower() == "yelp":
+            provider_config = {"location": "United States", "limit": 5}
+            return self.provider_map[name.lower()](api_key, config=provider_config)
+
         return self.provider_map[name.lower()](api_key)
 
     def get_finder_instance(self, name, api_key):
