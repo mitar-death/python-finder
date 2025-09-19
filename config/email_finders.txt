@@ -1,0 +1,2 @@
+hunter=HUNTER_API_KEY_1
+snov=SNOV_API_KEY_1

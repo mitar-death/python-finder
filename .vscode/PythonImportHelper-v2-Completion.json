@@ -1,0 +1,313 @@
+[
+    {
+        "label": "runpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "runpy",
+        "description": "runpy",
+        "detail": "runpy",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "site",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "site",
+        "description": "site",
+        "detail": "site",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "BaseProvider",
+        "importPath": "providers.base_provider",
+        "description": "providers.base_provider",
+        "isExtraImport": true,
+        "detail": "providers.base_provider",
+        "documentation": {}
+    },
+    {
+        "label": "BaseProvider",
+        "importPath": "providers.base_provider",
+        "description": "providers.base_provider",
+        "isExtraImport": true,
+        "detail": "providers.base_provider",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "importPath": "config_loader",
+        "description": "config_loader",
+        "isExtraImport": true,
+        "detail": "config_loader",
+        "documentation": {}
+    },
+    {
+        "label": "YelpProvider",
+        "importPath": "providers.yelp_provider",
+        "description": "providers.yelp_provider",
+        "isExtraImport": true,
+        "detail": "providers.yelp_provider",
+        "documentation": {}
+    },
+    {
+        "label": "GoogleProvider",
+        "importPath": "providers.google_provider",
+        "description": "providers.google_provider",
+        "isExtraImport": true,
+        "detail": "providers.google_provider",
+        "documentation": {}
+    },
+    {
+        "label": "HunterFinder",
+        "importPath": "finders.hunter_finder",
+        "description": "finders.hunter_finder",
+        "isExtraImport": true,
+        "detail": "finders.hunter_finder",
+        "documentation": {}
+    },
+    {
+        "label": "SnovFinder",
+        "importPath": "finders.snov_finder",
+        "description": "finders.snov_finder",
+        "isExtraImport": true,
+        "detail": "finders.snov_finder",
+        "documentation": {}
+    },
+    {
+        "label": "bin_dir",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "bin_dir = os.path.dirname(abs_file)\nbase = bin_dir[: -len('bin') - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'finders-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "base = bin_dir[: -len('bin') - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'finders-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"PATH\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'finders-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'finders-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV_PROMPT\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV_PROMPT\"] = 'finders-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "prev_length",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "prev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.path[:]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.real_prefix",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.prefix",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "BaseFinder",
+        "kind": 6,
+        "importPath": "finders.base_finder",
+        "description": "finders.base_finder",
+        "peekOfCode": "class BaseFinder(ABC):\n    def __init__(self, api_key):\n        self.api_key = api_key\n    @abstractmethod\n    def find(self, text: str) -> list[str]:\n        pass",
+        "detail": "finders.base_finder",
+        "documentation": {}
+    },
+    {
+        "label": "HunterFinder",
+        "kind": 6,
+        "importPath": "finders.hunter_finder",
+        "description": "finders.hunter_finder",
+        "peekOfCode": "class HunterFinder(BaseFinder):\n    BASE_URL = \"https://api.hunter.io/v2/domain-search\"\n    def find(self, domain, proxy=None):\n        params = {\"domain\": domain, \"api_key\": self.api_key}\n        proxies = {\"http\": proxy, \"https\": proxy} if proxy else None\n        try:\n            resp = requests.get(self.BASE_URL, params=params, proxies=proxies, timeout=10)\n            resp.raise_for_status()\n            data = resp.json()\n            emails = [e.get(\"value\") for e in data.get(\"data\", {}).get(\"emails\", [])]",
+        "detail": "finders.hunter_finder",
+        "documentation": {}
+    },
+    {
+        "label": "SnovFinder",
+        "kind": 6,
+        "importPath": "finders.snov_finder",
+        "description": "finders.snov_finder",
+        "peekOfCode": "class SnovFinder(BaseFinder):\n    BASE_URL = \"https://api.snov.io/v1/get-domain-emails-with-info\"\n    def find(self, domain, proxy=None):\n        params = {\"domain\": domain, \"access_token\": self.api_key}\n        proxies = {\"http\": proxy, \"https\": proxy} if proxy else None\n        try:\n            resp = requests.get(self.BASE_URL, params=params, proxies=proxies, timeout=10)\n            resp.raise_for_status()\n            data = resp.json()\n            emails = [e.get(\"email\") for e in data.get(\"emails\", [])]",
+        "detail": "finders.snov_finder",
+        "documentation": {}
+    },
+    {
+        "label": "BaseProvider",
+        "kind": 6,
+        "importPath": "providers.base_provider",
+        "description": "providers.base_provider",
+        "peekOfCode": "class BaseProvider(ABC):\n    \"\"\"\n    Abstract base class for all search providers.\n    \"\"\"\n    def __init__(self, api_key:str):\n        self.api_key = api_key\n    @abstractmethod\n    def search(self,query, provider, proxies):\n        \"\"\"\n        Perform a search and return a list of results.",
+        "detail": "providers.base_provider",
+        "documentation": {}
+    },
+    {
+        "label": "GoogleProvider",
+        "kind": 6,
+        "importPath": "providers.google_provider",
+        "description": "providers.google_provider",
+        "peekOfCode": "class GoogleProvider(BaseProvider):\n    BASE_URL = \"https://maps.googleapis.com/maps/api/place/textsearch/json\"\n    def __init__(self, api_key:str):\n        super().__init__(api_key)\n    def search(self,query,providers, proxies):\n        params = {\n            \"query\": query,\n            \"key\": self.api_key,\n            \"limit\": providers[\"limit\"],\n        }",
+        "detail": "providers.google_provider",
+        "documentation": {}
+    },
+    {
+        "label": "YelpProvider",
+        "kind": 6,
+        "importPath": "providers.yelp_provider",
+        "description": "providers.yelp_provider",
+        "peekOfCode": "class YelpProvider(BaseProvider):\n    BASE_URL = \"https://api.yelp.com/v3/businesses/search\"\n    def __init__(self, api_key: str):\n        super().__init__(api_key)\n        self.headers = {\"Authorization\": f\"Bearer {self.api_key}\"}\n    def search(self, query, provider, proxy):\n        parms = {\n            \"term\": query,\n            \"location\": provider[\"location\"],\n            \"limit\": provider[\"limit\"],",
+        "detail": "providers.yelp_provider",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "kind": 6,
+        "importPath": "config_loader",
+        "description": "config_loader",
+        "peekOfCode": "class Config:\n    def __init__(self):\n        self.providers = self.load_providers(\"./config/providers.txt\") \n        self.email_finders = self.load_email_finders(\"./config/email_finders.txt\") \n        self.proxies = self.load_proxies(\"./config/proxies.txt\") \n        self.queries = self.load_queries(\"./config/queries.txt\") \n    def load_proxies(self, file_path:str):\n        \"\"\"\n        Load proxies from a txt file.\n        Format: one proxy per line.",
+        "detail": "config_loader",
+        "documentation": {}
+    },
+    {
+        "label": "Main",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class Main:\n    def __init__(self):\n        cfg = Config()\n        self.providers = cfg.load_providers(\"./config/providers.txt\")\n        self.email_finders = cfg.load_email_finders(\"./config/email_finders.txt\")\n        self.proxies = cfg.load_proxies(\"./config/proxies.txt\")\n        self.queries = cfg.load_queries(\"./config/queries.txt\")\n        # Mapping: extendable\n        self.provider_map = {\n            \"yelp\": YelpProvider,",
+        "detail": "main",
+        "documentation": {}
+    }
+]
