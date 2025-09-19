@@ -8,7 +8,7 @@ class BaseProvider(ABC):
         self.api_key = api_key
         
     @abstractmethod
-    def search(self,query, provider, proxies):
+    def search(self, query: str, proxy: dict = None):
         """
         Perform a search and return a list of results.
         Each result should be a dict with keys like:

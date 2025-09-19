@@ -7,7 +7,7 @@ class HunterFinder(BaseFinder):
 
     def find(self, domain, proxy=None):
         params = {"domain": domain, "api_key": self.api_key}
-        proxies = {"http": proxy, "https": proxy} if proxy else None
+        proxies = proxy if proxy else None
         try:
             resp = requests.get(self.BASE_URL, params=params, proxies=proxies, timeout=10)
             resp.raise_for_status()

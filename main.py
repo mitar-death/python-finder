@@ -52,7 +52,9 @@ class Main:
     def rotate_proxy(self):
         if not self.proxies:
             return None
-        return random.choice(self.proxies)
+        proxy_url = random.choice(self.proxies)
+        # Convert proxy string to dictionary format expected by requests
+        return {"http": proxy_url, "https": proxy_url}
 
     def run_providers(self):
         for name, api_key in self.providers.items():

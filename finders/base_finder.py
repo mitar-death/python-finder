@@ -6,5 +6,5 @@ class BaseFinder(ABC):
         self.api_key = api_key
 
     @abstractmethod
-    def find(self, text: str) -> list[str]:
+    def find(self, domain: str, proxy: dict = None) -> list[str]:
         pass
