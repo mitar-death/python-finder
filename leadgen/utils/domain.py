@@ -6,8 +6,7 @@ from typing import Optional, Set
 from leadgen.config.loader import ConfigLoader
 from leadgen.domain_finders.base import BaseDomainFinder
 from leadgen.models.company import Company
-from leadgen.utils.proxy import Proxy
-from leadgen.domain_finders.apollo import ApolloDomainFinder
+from leadgen.models.email_result import Contact
 from ..utils.logging import logger
 from typing import List, Dict, Any
 import time
@@ -33,29 +32,6 @@ class DomainResolver:
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         })
-        self.domain_finders :Dict[str, BaseDomainFinder] ={}
-        
-        self._initialize_domain_finders()
-        
-    def _initialize_domain_finders(self):
-        """Initialize email finders."""
-        domain_finder_map = {
-             "apollo": ApolloDomainFinder,
-          
-        }
-        
-        domain_finders = ConfigLoader()._load_providers('domain_finders.txt')
-        for name, api_key in domain_finders.items():
-            if name.lower() in domain_finder_map:
-                try:
-                    finder = domain_finder_map[name.lower()](api_key)
-                    self.domain_finders[name] = finder
-                    logger.info(f"Initialized {name} domain finder")
-
-                except Exception as e:
-                    logger.error(f"Failed to initialize {name} finder: {e}")
-            else:
-                logger.warning(f"Unknown domain finder: {name}")
 
     def extract_business_domain(self, company: Company ) -> Optional[str]:
         """
@@ -83,10 +59,15 @@ class DomainResolver:
                     proxy_info = f"proxy {proxy}" if proxy else "no proxy"
                     logger.info(f"[{name.upper()}] Searching for '{company_name}' with {proxy_info}")
 
-                    domain = domain_finder.find(company, proxy=proxy)
-                    if domain and self._is_valid_business_domain(domain):
-                        logger.debug(f"Found business domain {domain} via {name} for {company_name}")
-                        return domain
+                    res = domain_finder.find(company, proxy=proxy)
+                    if res and isinstance(res, str):
+                        domain = self._clean_and_extract_domain(res)
+                        if domain and self._is_valid_business_domain(domain):
+                            logger.debug(f"Found business domain {domain} via {name} for {company_name}")
+                            return domain
+                    elif res and isinstance(res, list):
+                        emails: List[Contact] = res
+                    
 
             # Sleep between attempts for rate limiting
             time.sleep(5)

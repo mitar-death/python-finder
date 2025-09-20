@@ -2,6 +2,7 @@
 import sys
 import argparse
 from pathlib import Path
+from leadgen.utils.proxy import ProxyManager
 from ..config.loader import ConfigLoader, ConfigurationError
 from ..orchestrator import LeadOrchestrator
 from ..utils.logging import logger
@@ -19,6 +20,17 @@ def create_parser() -> argparse.ArgumentParser:
         "--config-dir",
         default="config",
         help="Configuration directory (default: config)"
+    )
+    
+    parser.add_argument(
+        "--location",
+        default="United States",
+        help="Location of this business, including address, city, state, zip code and country."
+    )
+    parser.add_argument(
+        "--hunter-department",
+        default="United States",
+        help="Get only email addresses for people working in the selected department(s"
     )
     
     parser.add_argument(
@@ -80,12 +92,23 @@ def main():
     if args.validate_config:
         success = validate_config_command(args.config_dir)
         sys.exit(0 if success else 1)
+        
+   
+     
     
     try:
         # Load configuration
         logger.info("Loading configuration...")
         loader = ConfigLoader(args.config_dir)
         config = loader.load_config()
+        
+         #NOTE: check if the old output files contants data, show warning as to not to loose last run
+         
+        # if config.output_dir:
+        #     pass
+            # walk the output dir here
+            # show prompt ask to delete files
+    
         
         # Override delay if specified
         if args.delay is not None:
@@ -96,9 +119,20 @@ def main():
         # Update output directory
         config.output.directory = args.output_dir
         
+        if location := args.location:
+            config.location = location
+            logger.info(f"Using custom location: {location}")
+            
+        if hunter_department := args.hunter_department:
+            config.hunter_department = hunter_department
+            logger.info(f"Using custom hunter_department: {hunter_department}")
+        
+        
         # Create orchestrator and run
         orchestrator = LeadOrchestrator(config)
         orchestrator.run_full_pipeline()
+        
+        
         
         # Save results
         logger.info("Saving results...")

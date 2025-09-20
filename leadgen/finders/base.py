@@ -1,6 +1,7 @@
 """Base finder interface for email discovery services."""
 from abc import ABC, abstractmethod
 from typing import List, Optional, Dict
+from leadgen.models.email_result import Contact
 from ..models.email_result import EmailResult
 
 
@@ -28,6 +29,13 @@ class BaseFinder(ABC):
     @abstractmethod
     def name(self) -> str:
         """Return the finder name."""
+        pass
+    
+    @abstractmethod
+    def _parse_email_data(self, data: dict) -> List[Contact]:
+        """
+        Parse  email finder JSON and return Contact objects
+        """
         pass
 
 

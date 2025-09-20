@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Dict, List
 from .models import AppConfig
 
-
+from leadgen.utils.logging import logger
 class ConfigurationError(Exception):
     """Raised when configuration is invalid or missing."""
     pass
@@ -77,7 +77,7 @@ class ConfigLoader:
     
     def _load_proxies(self, filename: str) -> List[str]:
         """Load proxy configuration from file."""
-        file_path = self.output_dir / filename
+        file_path = self.config_dir / filename
         
         if not file_path.exists():
             return []
@@ -115,6 +115,28 @@ class ConfigLoader:
                     f"{filename} is empty. Please add at least one search query."
                 )
             return queries
+        except Exception as e:
+            if isinstance(e, ConfigurationError):
+                raise
+            raise ConfigurationError(f"Error reading {filename}: {e}")
+        
+    def _load_companies(self, filename: str) -> List[str]:
+        """Load companies from file."""
+        file_path = self.output_dir / filename
+
+        if not file_path.exists():
+            raise ConfigurationError(
+                f"Required file {filename} not found. "
+                f"Please create it with one company name per line."
+            )
+
+        try:
+            companies = self._read_lines(file_path)
+            if not companies:
+                raise ConfigurationError(
+                    f"{filename} is empty. Please add at least one company name."
+                )
+            return companies
         except Exception as e:
             if isinstance(e, ConfigurationError):
                 raise

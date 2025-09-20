@@ -1,6 +1,7 @@
 """Yelp search provider implementation."""
 import requests
 from typing import List, Optional, Dict
+from leadgen.utils.proxy import ProxyManager
 from .base import BaseProvider, ProviderError
 from ..models.company import Company
 from ..utils.domain import DomainResolver
@@ -15,6 +16,7 @@ class YelpProvider(BaseProvider):
         super().__init__(api_key, config)
         self.headers = {"Authorization": f"Bearer {self.api_key}"}
         self.domain_resolver = DomainResolver()
+        self.config = config or {}
 
     @property
     def name(self) -> str:
@@ -22,16 +24,17 @@ class YelpProvider(BaseProvider):
 
     def search(self,
                query: str,
-               proxy: Optional[Dict[str, str]] = None, domain_finders=Optional[List[str]]) -> List[Company]:
+               proxy: Optional[Dict[str, str]] = None) -> List[Company]:
         """Search for businesses using Yelp API."""
         params = {
             "term": query,
             "location": self.config.get("location", "United States"),
             "limit": self.config.get("limit", 5),
+            "is_claimed": True,
         }
 
         try:
-            response = requests.get(self.BASE_URL,
+            response = ProxyManager().safe_request("get", self.BASE_URL,
                                     headers=self.headers,
                                     params=params,
                                     proxies=proxy,
@@ -58,29 +61,25 @@ class YelpProvider(BaseProvider):
                     id=id,
                     name=name,
                     url=yelp_url,  # Keep Yelp URL for reference
-                   
                     address=address,
                     phone=business.get("phone", ""))
                 
                 
-                # Try to resolve the actual business website domain
-                business_domain = None
-                if yelp_url and name:
-                    business_domain = self.domain_resolver.extract_business_domain(company)
+                # # Try to resolve the actual business website domain
+                # business_domain = None
+                # if yelp_url and name:
+                #     business_domain = self.domain_resolver.extract_business_domain(company)
 
-                # Only set domain if we found a valid business domain (not provider domain)
-                valid_domain = None
-                if business_domain and self.domain_resolver._is_valid_business_domain(
-                        business_domain):
-                    valid_domain = business_domain
-                    logger.info(f"Found valid domain: {valid_domain} with id {id}")
+                # # Only set domain if we found a valid business domain (not provider domain)
+                # valid_domain = None
+                # if business_domain and self.domain_resolver._is_valid_business_domain(
+                #         business_domain):
+                #     valid_domain = business_domain
+                #     logger.info(f"Found valid domain: {valid_domain} with id {id}")
                     
-                # set valid domain
-                company.domain = valid_domain
+                # # set valid domain
+                # company.domain = valid_domain
                 companies.append(company)
-
-                
-
             return companies
 
         except requests.RequestException as e:

@@ -24,7 +24,7 @@ class ProxyConfig:
 @dataclass
 class OutputConfig:
     """Configuration for output settings."""
-    format: str = "jsonl"  # jsonl, csv, txt
+    format: str = "xlsx"  # jsonl, csv, txt,xlxs
     directory: str = "output"
     companies_file: str = "companies"
     domains_file: str = "domains" 
@@ -37,7 +37,7 @@ class AppConfig:
     email_finders: Dict[str, str] = field(default_factory=dict)
     proxies: List[str] = field(default_factory=list)
     queries: List[str] = field(default_factory=list)
-    run_email_finder_alone: bool = True
+    run_email_finder_alone: bool = False
     
     # Sub-configurations
     delays: DelayConfig = field(default_factory=DelayConfig)
@@ -45,10 +45,19 @@ class AppConfig:
     output: OutputConfig = field(default_factory=OutputConfig)
     
     # Provider-specific settings
-    yelp_location: str = "United States"
-    yelp_limit: int = 5
+    location: str = "United States" # which location should the provider serach
+    yelp_limit: int = 30
     google_cx: str = ""
     google_limit: int = 5
+    
+    # Email finder specific settings
+    email_finder_limit: int = 2
+    
+    # Get only email addresses for people working in the selected department(s).
+    # The possible values are executive, it, finance, management, sales, legal,
+    # support, hr, marketing, communication, education, design, health or 
+    # operations. Several departments can be selected (comma-delimited).
+    hunter_department: str = ""  
     
     @classmethod
     def from_env(cls) -> "AppConfig":

@@ -1,8 +1,8 @@
-"""Output storage management."""
 import json
-import os
+import csv
 from pathlib import Path
-from typing import List
+from typing import List, Optional, Set
+from openpyxl import Workbook
 from ..models.company import Company
 from ..models.email_result import EmailResult
 from ..config.models import OutputConfig
@@ -10,130 +10,163 @@ from ..utils.logging import logger
 
 
 class OutputManager:
-    """Manages saving results to various output formats."""
-    
+    """Manages saving results (companies, domains, emails) to various formats."""
+
     def __init__(self, config: OutputConfig):
         self.config = config
         self.output_dir = Path(config.directory)
-        self.output_dir.mkdir(exist_ok=True)
-    
-    def save_results(self, companies: List[Company], email_results: List[EmailResult], filtered_domains: set = None):
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+
+    # -------------------- PUBLIC --------------------
+
+    def save_results(
+        self,
+        companies: List[Company],
+        email_results: List[EmailResult],
+        filtered_domains: Optional[Set[str]] = None,
+    ):
         """Save all results to configured output format."""
         logger.info(f"Saving results to {self.output_dir}")
-        
-        # Save companies
+
+        # Companies
         if companies:
             self._save_companies(companies)
-            
-        # Save domains using the filtered set from orchestrator
+
+        # Domains
         if filtered_domains is not None:
+            logger.info(filtered_domains)
             self._save_domains_filtered(filtered_domains)
         else:
             self._save_domains(companies)
-        
-        # Save email results
+
+        # Emails
         if email_results:
             self._save_emails(email_results)
-        
+
         logger.success(f"Results saved to {self.output_dir}")
-    
+
+    # -------------------- COMPANIES --------------------
+
     def _save_companies(self, companies: List[Company]):
-        """Save company data."""
-        if self.config.format == "jsonl":
-            self._save_companies_jsonl(companies)
+        """Save company data based on configured format."""
+        if self.config.format.lower() in {"jsonl", "json"}:
+            self._save_jsonl([c.to_dict() for c in companies], self.config.companies_file)
+        elif self.config.format.lower() == "csv":
+            self._save_csv([c.to_dict() for c in companies], self.config.companies_file)
         else:
-            self._save_companies_txt(companies)
-    
-    def _save_companies_jsonl(self, companies: List[Company]):
-        """Save companies as JSONL."""
-        file_path = self.output_dir / f"{self.config.companies_file}.jsonl"
-        
-        with open(file_path, "w", encoding="utf-8") as f:
-            for company in companies:
-                json.dump(company.to_dict(), f, ensure_ascii=False)
-                f.write("\\n")
-        
-        logger.info(f"Saved {len(companies)} companies to {file_path}")
-    
-    def _save_companies_txt(self, companies: List[Company]):
-        """Save companies as text (legacy format)."""
-        file_path = self.output_dir / f"{self.config.companies_file}.txt"
-        
-        with open(file_path, "w", encoding="utf-8") as f:
-            for company in companies:
-                f.write(str(company.to_dict()) + "\\n")
-        
-        logger.info(f"Saved {len(companies)} companies to {file_path}")
-    
+            self._save_txt([c.to_dict() for c in companies], self.config.companies_file)
+
+    # -------------------- DOMAINS --------------------
+
     def _save_domains(self, companies: List[Company]):
-        """Save unique domains from orchestrator (already filtered)."""
-        # Note: This should actually get domains from orchestrator.domains, not companies
-        # But for now, extract only valid domains from companies
+        """Extract unique valid domains from companies."""
         from ..utils.domain import DomainResolver
+
         resolver = DomainResolver()
-        
-        domains = {
-            company.domain for company in companies 
-            if company.domain and resolver._is_valid_business_domain(company.domain)
-        }
-        
-        file_path = self.output_dir / f"{self.config.domains_file}.txt"
-        
-        # Always overwrite, don't append
-        if domains:
-            with open(file_path, "w", encoding="utf-8") as f:
-                for domain in sorted(domains):
-                    f.write(domain + "\\n")
-            logger.info(f"Saved {len(domains)} unique domains to {file_path}")
-        else:
-            # Write empty file if no domains
-            with open(file_path, "w", encoding="utf-8") as f:
-                pass
-            logger.info(f"No valid business domains found - wrote empty domains file")
-    
-    def _save_domains_filtered(self, filtered_domains: set):
+        domains = {c.domain for c in companies if c.domain and resolver._is_valid_business_domain(c.domain)}
+        self._save_domains_set(domains, self.config.domains_file)
+
+    def _save_domains_filtered(self, domains: Set[str]):
         """Save pre-filtered domains from orchestrator."""
-        file_path = self.output_dir / f"{self.config.domains_file}.txt"
-        
-        # Always overwrite, don't append
-        with open(file_path, "w", encoding="utf-8") as f:
-            if filtered_domains:
-                for domain in sorted(filtered_domains):
-                    f.write(domain + "\\n")
-                logger.info(f"Saved {len(filtered_domains)} filtered domains to {file_path}")
-            else:
-                # Empty file for no domains
-                logger.info(f"No valid business domains found - wrote empty domains file")
-    
+        self._save_domains_set(domains, self.config.domains_file)
+
+    def _save_domains_set(self, domains: Set[Optional[str]], filename: str):
+        """Save a set of domains in TXT or CSV."""
+        if not domains:
+            logger.info("No domains to save - writing empty file")
+            with open(self.output_dir / f"{filename}.txt", "w", encoding="utf-8") as f:
+                pass
+            return
+
+        # Remove None values
+        cleaned_domains = [d for d in domains if d is not None]
+
+        if self.config.format.lower() == "csv":
+            file_path = self.output_dir / f"{filename}.csv"
+            with open(file_path, "w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                writer.writerow(["domain"])
+                for d in sorted(cleaned_domains):
+                    writer.writerow([d])
+        else:  # TXT
+            file_path = self.output_dir / f"{filename}.txt"
+            with open(file_path, "w", encoding="utf-8") as f:
+                for d in sorted(cleaned_domains):
+                    f.write(d + "\n")
+
+        logger.info(f"Saved {len(cleaned_domains)} domains to {file_path}")
+
+    # -------------------- EMAILS --------------------
+
     def _save_emails(self, email_results: List[EmailResult]):
-        """Save email results."""
-        if self.config.format == "jsonl":
-            self._save_emails_jsonl(email_results)
+        """Save emails in configured format."""
+        emails_list = []
+        for r in email_results:
+            if r.success and r.emails:
+                emails_cleaned = [ {k: v for k, v in e.to_dict().items() if k != "domain"} for e in r.emails ]
+                emails_list.extend(emails_cleaned)
+
+        if not emails_list:
+            logger.info("No email results to save")
+            return
+
+        if self.config.format.lower() == "csv":
+            self._save_csv(emails_list, self.config.emails_file)
+        elif self.config.format.lower() in {"jsonl", "json"}:
+            self._save_jsonl(emails_list, self.config.emails_file)
+        elif self.config.format.lower() == "xlsx":
+            self._save_xlsx(emails_list, self.config.emails_file)
         else:
-            self._save_emails_txt(email_results)
-    
-    def _save_emails_jsonl(self, email_results: List[EmailResult]):
-        """Save emails as JSONL."""
-        file_path = self.output_dir / f"{self.config.emails_file}.jsonl"
-        
-        with open(file_path, "w", encoding="utf-8") as f:
-            for result in email_results:
-                json.dump(result.to_dict(), f, ensure_ascii=False)
-                f.write("\\n")
-        
-        total_emails = sum(len(r.emails) for r in email_results if r.success)
-        logger.info(f"Saved {len(email_results)} email results ({total_emails} total emails) to {file_path}")
-    
-    def _save_emails_txt(self, email_results: List[EmailResult]):
-        """Save emails as text (legacy format)."""
-        file_path = self.output_dir / f"{self.config.emails_file}.txt"
-        
-        with open(file_path, "w", encoding="utf-8") as f:
-            for result in email_results:
-                if result.success and result.emails:
-                    emails_str = ",".join(result.emails)
-                    f.write(f"{result.domain}: {emails_str}\\n")
-        
-        successful_results = [r for r in email_results if r.success and r.emails]
-        total_emails = sum(len(r.emails) for r in successful_results)
-        logger.info(f"Saved {len(successful_results)} domains with emails ({total_emails} total emails) to {file_path}")
+            self._save_txt(emails_list, self.config.emails_file)
+
+    # -------------------- FILE HELPERS --------------------
+
+    def _save_txt(self, data: List[dict], filename: str):
+        file_path = self.output_dir / f"{filename}.txt"
+        with open(file_path, "a", encoding="utf-8") as f:
+            for entry in data:
+                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        logger.info(f"Saved {len(data)} records to {file_path}")
+
+    def _save_csv(self, data: List[dict], filename: str):
+        if not data:
+            return
+        file_path = self.output_dir / f"{filename}.csv"
+        fieldnames = sorted({k for d in data for k in d.keys()})
+        with open(file_path, "a", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(data)
+        logger.info(f"Saved {len(data)} records to {file_path}")
+
+    def _save_jsonl(self, data: List[dict], filename: str):
+        file_path = self.output_dir / f"{filename}.jsonl"
+        with open(file_path, "a", encoding="utf-8") as f:
+            for entry in data:
+                json.dump(entry, f, ensure_ascii=False)
+                f.write("\n")
+        logger.info(f"Saved {len(data)} records to {file_path}")
+
+    def _save_xlsx(self, data: List[dict], filename: str):
+        """Append data to XLSX file, creating a new file if it doesn't exist."""
+        if not data:
+            return
+        file_path = self.output_dir / f"{filename}.xlsx"
+        from openpyxl import load_workbook, Workbook
+
+        if file_path.exists():
+            wb = load_workbook(file_path)
+            ws = wb.active
+        else:
+            wb = Workbook()
+            ws = wb.active
+            # Write header
+            fieldnames = sorted({k for d in data for k in d.keys()})
+            ws.append(fieldnames)
+
+        fieldnames = [cell.value for cell in ws[1]]  # Use existing header
+        for row in data:
+            ws.append([row.get(f, "") for f in fieldnames])
+
+        wb.save(file_path)
+        logger.info(f"Appended {len(data)} records to {file_path}")

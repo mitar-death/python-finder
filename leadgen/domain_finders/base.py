@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 from leadgen.models.company import Company
+from leadgen.models.email_result import Contact
 
 class BaseDomainFinder(ABC):
     """Abstract class for all domain finders"""
@@ -12,7 +13,7 @@ class BaseDomainFinder(ABC):
         
         
     @abstractmethod
-    def find(self, company: Company, proxy: Optional[Dict[str, str]] = None) -> str:
+    def find(self, company: Company, proxy: Optional[Dict[str, str]] = None) -> str|List[Contact]:
         """
         Perform a domain search and return the domain.
         

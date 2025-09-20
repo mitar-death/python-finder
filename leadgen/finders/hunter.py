@@ -1,7 +1,10 @@
 """Hunter.io email finder implementation."""
 import requests
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Any
 from leadgen.utils.logging import logger
+from leadgen.utils.proxy import ProxyManager
+from leadgen.config.loader import ConfigLoader
+from leadgen.config.models import AppConfig
 from .base import BaseFinder, FinderError
 from ..models.email_result import EmailResult, Contact
 
@@ -17,10 +20,12 @@ class HunterFinder(BaseFinder):
     
     def find_email(self, domain: str, proxy: Optional[Dict[str, str]] = None) -> EmailResult:
         """Find emails for a domain using Hunter.io API."""
-        params = {"domain": domain, "api_key": self.api_key}
+        config: AppConfig = ConfigLoader().load_config()
+
+        params = {"domain": domain, "api_key": self.api_key,"department": config.hunter_department or "executive"}
         
         try:
-            response = requests.get(
+            response = ProxyManager().safe_request("get",
                 self.BASE_URL,
                 params=params,
                 proxies=proxy,
@@ -93,5 +98,5 @@ class HunterFinder(BaseFinder):
             )
             contacts.append(contact)
 
-        logger.info(f"Parsed {len(contacts)} contacts from email data")
+        # logger.info(f"Parsed {len(contacts)} contacts from response data")
         return contacts

@@ -10,12 +10,25 @@ class ApolloDomainFinder(BaseDomainFinder):
     
     BASE_URL = "https://api.apollo.io/api/v1/mixed_companies/search"
     
+    def __init__(self, api_key):
+        super().__init__(api_key=api_key)
+        if not self.api_key:
+            raise DomainFinderError("No Hunter.io API key provided")
+        self.headers ={
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': self.api_key,
+                    'accept': 'application/json'
+            }
+    
     @property
     def name(self) -> str:
         return "hunter"
     
     def find(self, company: Company, proxy: Optional[Dict[str, str]] = None) -> str:
         """Find emails for a domain using Hunter.io API."""
+        if not company.domain:
+            logger.info(f"Company {company.name} has no domain, skipping")
+            return None
         params = {"q_organization_name": company.domain}
         
         try:
@@ -25,11 +38,7 @@ class ApolloDomainFinder(BaseDomainFinder):
                     params=params,
                     proxies=proxy,
                     timeout=10,
-                    headers={
-                        'Content-Type': 'application/json',
-                        'X-Api-Key': self.api_key,
-                        'accept': 'application/json'
-                    }
+                    headers=self.headers
                 )
 
             

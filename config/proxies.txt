@@ -1,3 +1,5 @@
 # Proxy configuration - currently disabled for simplicity
 # http://user:pass@ip:port
-# socks5://127.0.0.1:9050
+socks5h://192.168.100.6:40002
+socks5h://192.168.100.6:40001
+socks5h://192.168.100.6:40004
