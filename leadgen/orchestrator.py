@@ -21,8 +21,9 @@ from leadgen.domain_finders.hunter import HunterDomainFinder, DomainFinderError
 class LeadOrchestrator:
     """Orchestrates the lead generation process."""
 
-    def __init__(self, config: AppConfig):
+    def __init__(self, config: AppConfig, state_store=None):
         self.config = config
+        self.state_store = state_store
         self.providers: Dict[str, BaseProvider] = {}
         self.finders: Dict[str, BaseFinder] = {}
         self.domain_finders :Dict[str, BaseDomainFinder] ={}
@@ -162,16 +163,33 @@ class LeadOrchestrator:
                 time.sleep(self.config.delays.provider_delay)
                 
         
-        #NOTE: Remove the existing companies from the old data
-        old_companies = ConfigLoader()._load_companies(f"companies.txt")
-        filered_companies = [company for company in all_companies if company.name not in old_companies]
-        
-        logger.info(f"Found {len(filered_companies)} new companies")
-        
-        self.companies = filered_companies
+        # Filter companies using StateStore for proper deduplication
+        if self.state_store:
+            new_companies = []
+            skipped_count = 0
+            for company in all_companies:
+                if not self.state_store.is_seen_company(company):
+                    new_companies.append(company)
+                    self.state_store.add_seen_company(company)
+                else:
+                    skipped_count += 1
+            
+            logger.info(f"Found {len(new_companies)} new companies (skipped {skipped_count} already processed)")
+            self.companies = new_companies
+        else:
+            # Fallback to old logic if no state store
+            old_companies = ConfigLoader()._load_companies(f"companies.txt")
+            filtered_companies = [company for company in all_companies if company.name not in old_companies]
+            logger.info(f"Found {len(filtered_companies)} new companies")
+            self.companies = filtered_companies
         logger.success(
-            f"Search phase complete: {len(filered_companies)} companies"
+            f"Search phase complete: {len(self.companies)} companies"
         )
+        
+        # Save state after company search phase
+        if self.state_store:
+            self.state_store.save_state()
+            logger.debug("💾 State saved after company search phase")
 
     def run_email_discovery(self):
         """Run the email discovery phase."""
@@ -198,10 +216,23 @@ class LeadOrchestrator:
         
 
 
+        # Filter domains that haven't been processed yet
+        domains_to_process = []
+        if self.state_store:
+            for domain in self.domains:
+                if not self.state_store.is_seen_domain(domain):
+                    domains_to_process.append(domain)
+                else:
+                    logger.info(f"Domain {domain} already processed for emails, skipping")
+        else:
+            domains_to_process = list(self.domains)
+        
+        logger.info(f"Processing emails for {len(domains_to_process)} new domains")
+
         for finder_name, finder in self.finders.items():
             logger.info(f"Running {finder_name} email finder")
 
-            for domain in self.domains:
+            for domain in domains_to_process:
                 try:
                     proxy = ProxyManager()._get_proxy()
                     proxy_info = f"proxy {proxy}" if proxy else "no proxy"
@@ -213,6 +244,11 @@ class LeadOrchestrator:
                     self.email_results.append(result)
 
                     if result.success and result.emails:
+                        # Mark emails as seen in StateStore
+                        if self.state_store:
+                            for email_obj in result.emails:
+                                if hasattr(email_obj, 'email') and email_obj.email:
+                                    self.state_store.add_seen_email(email_obj.email)
                         logger.success(
                             f"Found {len(result.emails)} emails for '{domain}'"
                         )
@@ -280,26 +316,46 @@ class LeadOrchestrator:
                             # Domain found
                             domain = resolver._clean_and_extract_domain(res)
                             if domain and resolver._is_valid_business_domain(domain):
-                                company.domain = domain
-                                self.domains.add(domain)  # Correctly store the domain
-                                logger.info(f"Found domain {domain} for {company_name}")
+                                # Check if domain already processed (StateStore integration)
+                                if self.state_store and self.state_store.is_seen_domain(domain):
+                                    logger.info(f"Domain {domain} already processed, skipping")
+                                else:
+                                    company.domain = domain
+                                    self.domains.add(domain)
+                                    if self.state_store:
+                                        self.state_store.add_seen_domain(domain)
+                                    logger.info(f"Found domain {domain} for {company_name}")
                                 found_result = True
                                 
                         else:
-                            # For hunter domain finder that retruns emails instead of domains
+                            # For hunter domain finder that returns emails instead of domains
                             domain = res["data"]["domain"]
                             contacts = domain_finder._parse_email_data(res)
-                            # Emails found
-                            result = EmailResult(
-                                domain=domain, 
-                                emails=contacts, 
-                                finder=name, 
-                                success=True
-                                )
                             
-                            self.domains.add(domain)
-                            self.email_results.append(result)  # Correctly store the EmailResult object
-                            logger.info(f"Found {len(res['data']['emails'])} emails for {company_name}")
+                            # Check if domain already processed
+                            if self.state_store and self.state_store.is_seen_domain(domain):
+                                logger.info(f"Domain {domain} already processed, skipping")
+                            else:
+                                # Emails found
+                                result = EmailResult(
+                                    domain=domain, 
+                                    emails=contacts, 
+                                    finder=name, 
+                                    success=True
+                                    )
+                                
+                                self.domains.add(domain)
+                                if self.state_store:
+                                    self.state_store.add_seen_domain(domain)
+                                    # Also mark emails as seen
+                                    for contact in contacts:
+                                        if hasattr(contact, 'email') and contact.email:
+                                            self.state_store.add_seen_email(contact.email)
+                            # Always mark as processed, even if we skipped it
+                            if self.state_store and domain:
+                                self.state_store.add_seen_domain(domain)
+                                self.email_results.append(result)  # Correctly store the EmailResult object
+                                logger.info(f"Found {len(res['data']['emails'])} emails for {company_name}")
                             found_result = True
                             
                     except Exception as e:

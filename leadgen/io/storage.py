@@ -34,7 +34,7 @@ class OutputManager:
 
         # Domains
         if filtered_domains is not None:
-            logger.info(filtered_domains)
+            logger.info(f"Filtering {len(filtered_domains)} domains")
             self._save_domains_filtered(filtered_domains)
         else:
             self._save_domains(companies)
@@ -70,7 +70,7 @@ class OutputManager:
         """Save pre-filtered domains from orchestrator."""
         self._save_domains_set(domains, self.config.domains_file)
 
-    def _save_domains_set(self, domains: Set[Optional[str]], filename: str):
+    def _save_domains_set(self, domains: Set[str], filename: str):
         """Save a set of domains in TXT or CSV."""
         if not domains:
             logger.info("No domains to save - writing empty file")
@@ -78,8 +78,8 @@ class OutputManager:
                 pass
             return
 
-        # Remove None values
-        cleaned_domains = [d for d in domains if d is not None]
+        # Remove None values and ensure strings
+        cleaned_domains = [str(d) for d in domains if d is not None and d]
 
         if self.config.format.lower() == "csv":
             file_path = self.output_dir / f"{filename}.csv"
@@ -133,9 +133,14 @@ class OutputManager:
             return
         file_path = self.output_dir / f"{filename}.csv"
         fieldnames = sorted({k for d in data for k in d.keys()})
+        
+        # Check if file exists and has content to avoid duplicate headers
+        file_exists = file_path.exists() and file_path.stat().st_size > 0
+        
         with open(file_path, "a", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
-            writer.writeheader()
+            if not file_exists:
+                writer.writeheader()
             writer.writerows(data)
         logger.info(f"Saved {len(data)} records to {file_path}")
 
@@ -160,13 +165,15 @@ class OutputManager:
         else:
             wb = Workbook()
             ws = wb.active
-            # Write header
-            fieldnames = sorted({k for d in data for k in d.keys()})
-            ws.append(fieldnames)
+            if ws is not None:
+                # Write header
+                fieldnames = sorted({k for d in data for k in d.keys()})
+                ws.append(fieldnames)
 
-        fieldnames = [cell.value for cell in ws[1]]  # Use existing header
-        for row in data:
-            ws.append([row.get(f, "") for f in fieldnames])
+        if ws is not None:
+            fieldnames = [cell.value for cell in ws[1]]  # Use existing header
+            for row in data:
+                ws.append([row.get(f, "") for f in fieldnames])
 
         wb.save(file_path)
         logger.info(f"Appended {len(data)} records to {file_path}")
