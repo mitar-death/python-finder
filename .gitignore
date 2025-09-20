@@ -1,4 +1,5 @@
 ./output/*
 *.txt
 *.xlsx
+./.local/*
 # ./config/*
