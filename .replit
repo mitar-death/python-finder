@@ -5,3 +5,26 @@ channel = "stable-25_05"
 
 [agent]
 expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Email Finder CLI"
+
+[[workflows.workflow]]
+name = "Email Finder CLI"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python run_leadgen.py"
+
+[workflows.workflow.metadata]
+outputType = "console"
