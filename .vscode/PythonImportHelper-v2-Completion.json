@@ -1,0 +1,1259 @@
+[
+    {
+        "label": "runpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "runpy",
+        "description": "runpy",
+        "detail": "runpy",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "site",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "site",
+        "description": "site",
+        "detail": "site",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "ProxyManager",
+        "importPath": "leadgen.utils.proxy",
+        "description": "leadgen.utils.proxy",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.proxy",
+        "documentation": {}
+    },
+    {
+        "label": "ProxyError",
+        "importPath": "leadgen.utils.proxy",
+        "description": "leadgen.utils.proxy",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.proxy",
+        "documentation": {}
+    },
+    {
+        "label": "ProxyManager",
+        "importPath": "leadgen.utils.proxy",
+        "description": "leadgen.utils.proxy",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.proxy",
+        "documentation": {}
+    },
+    {
+        "label": "ProxyManager",
+        "importPath": "leadgen.utils.proxy",
+        "description": "leadgen.utils.proxy",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.proxy",
+        "documentation": {}
+    },
+    {
+        "label": "ProxyManager",
+        "importPath": "leadgen.utils.proxy",
+        "description": "leadgen.utils.proxy",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.proxy",
+        "documentation": {}
+    },
+    {
+        "label": "ProxyManager",
+        "importPath": "leadgen.utils.proxy",
+        "description": "leadgen.utils.proxy",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.proxy",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Set",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Set",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Set",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "importPath": "leadgen.utils.logging",
+        "description": "leadgen.utils.logging",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "importPath": "leadgen.utils.logging",
+        "description": "leadgen.utils.logging",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "importPath": "leadgen.utils.logging",
+        "description": "leadgen.utils.logging",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "importPath": "leadgen.utils.logging",
+        "description": "leadgen.utils.logging",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "importPath": "leadgen.utils.logging",
+        "description": "leadgen.utils.logging",
+        "isExtraImport": true,
+        "detail": "leadgen.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "field",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "Company",
+        "importPath": "leadgen.models.company",
+        "description": "leadgen.models.company",
+        "isExtraImport": true,
+        "detail": "leadgen.models.company",
+        "documentation": {}
+    },
+    {
+        "label": "Company",
+        "importPath": "leadgen.models.company",
+        "description": "leadgen.models.company",
+        "isExtraImport": true,
+        "detail": "leadgen.models.company",
+        "documentation": {}
+    },
+    {
+        "label": "Company",
+        "importPath": "leadgen.models.company",
+        "description": "leadgen.models.company",
+        "isExtraImport": true,
+        "detail": "leadgen.models.company",
+        "documentation": {}
+    },
+    {
+        "label": "Company",
+        "importPath": "leadgen.models.company",
+        "description": "leadgen.models.company",
+        "isExtraImport": true,
+        "detail": "leadgen.models.company",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "ABC",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "abstractmethod",
+        "importPath": "abc",
+        "description": "abc",
+        "isExtraImport": true,
+        "detail": "abc",
+        "documentation": {}
+    },
+    {
+        "label": "Contact",
+        "importPath": "leadgen.models.email_result",
+        "description": "leadgen.models.email_result",
+        "isExtraImport": true,
+        "detail": "leadgen.models.email_result",
+        "documentation": {}
+    },
+    {
+        "label": "Contact",
+        "importPath": "leadgen.models.email_result",
+        "description": "leadgen.models.email_result",
+        "isExtraImport": true,
+        "detail": "leadgen.models.email_result",
+        "documentation": {}
+    },
+    {
+        "label": "Contact",
+        "importPath": "leadgen.models.email_result",
+        "description": "leadgen.models.email_result",
+        "isExtraImport": true,
+        "detail": "leadgen.models.email_result",
+        "documentation": {}
+    },
+    {
+        "label": "Contact",
+        "importPath": "leadgen.models.email_result",
+        "description": "leadgen.models.email_result",
+        "isExtraImport": true,
+        "detail": "leadgen.models.email_result",
+        "documentation": {}
+    },
+    {
+        "label": "Contact",
+        "importPath": "leadgen.models.email_result",
+        "description": "leadgen.models.email_result",
+        "isExtraImport": true,
+        "detail": "leadgen.models.email_result",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigLoader",
+        "importPath": "leadgen.config.loader",
+        "description": "leadgen.config.loader",
+        "isExtraImport": true,
+        "detail": "leadgen.config.loader",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigLoader",
+        "importPath": "leadgen.config.loader",
+        "description": "leadgen.config.loader",
+        "isExtraImport": true,
+        "detail": "leadgen.config.loader",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigLoader",
+        "importPath": "leadgen.config.loader",
+        "description": "leadgen.config.loader",
+        "isExtraImport": true,
+        "detail": "leadgen.config.loader",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigLoader",
+        "importPath": "leadgen.config.loader",
+        "description": "leadgen.config.loader",
+        "isExtraImport": true,
+        "detail": "leadgen.config.loader",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "leadgen.config.models",
+        "description": "leadgen.config.models",
+        "isExtraImport": true,
+        "detail": "leadgen.config.models",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "leadgen.config.models",
+        "description": "leadgen.config.models",
+        "isExtraImport": true,
+        "detail": "leadgen.config.models",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "csv",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "csv",
+        "description": "csv",
+        "detail": "csv",
+        "documentation": {}
+    },
+    {
+        "label": "Workbook",
+        "importPath": "openpyxl",
+        "description": "openpyxl",
+        "isExtraImport": true,
+        "detail": "openpyxl",
+        "documentation": {}
+    },
+    {
+        "label": "urlparse",
+        "importPath": "urllib.parse",
+        "description": "urllib.parse",
+        "isExtraImport": true,
+        "detail": "urllib.parse",
+        "documentation": {}
+    },
+    {
+        "label": "urlparse",
+        "importPath": "urllib.parse",
+        "description": "urllib.parse",
+        "isExtraImport": true,
+        "detail": "urllib.parse",
+        "documentation": {}
+    },
+    {
+        "label": "urljoin",
+        "importPath": "urllib.parse",
+        "description": "urllib.parse",
+        "isExtraImport": true,
+        "detail": "urllib.parse",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "BaseDomainFinder",
+        "importPath": "leadgen.domain_finders.base",
+        "description": "leadgen.domain_finders.base",
+        "isExtraImport": true,
+        "detail": "leadgen.domain_finders.base",
+        "documentation": {}
+    },
+    {
+        "label": "DomainFinderError",
+        "importPath": "leadgen.domain_finders.base",
+        "description": "leadgen.domain_finders.base",
+        "isExtraImport": true,
+        "detail": "leadgen.domain_finders.base",
+        "documentation": {}
+    },
+    {
+        "label": "BaseDomainFinder",
+        "importPath": "leadgen.domain_finders.base",
+        "description": "leadgen.domain_finders.base",
+        "isExtraImport": true,
+        "detail": "leadgen.domain_finders.base",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "HunterDomainFinder",
+        "importPath": "leadgen.domain_finders.hunter",
+        "description": "leadgen.domain_finders.hunter",
+        "isExtraImport": true,
+        "detail": "leadgen.domain_finders.hunter",
+        "documentation": {}
+    },
+    {
+        "label": "HunterDomainFinder",
+        "importPath": "leadgen.domain_finders.hunter",
+        "description": "leadgen.domain_finders.hunter",
+        "isExtraImport": true,
+        "detail": "leadgen.domain_finders.hunter",
+        "documentation": {}
+    },
+    {
+        "label": "DomainFinderError",
+        "importPath": "leadgen.domain_finders.hunter",
+        "description": "leadgen.domain_finders.hunter",
+        "isExtraImport": true,
+        "detail": "leadgen.domain_finders.hunter",
+        "documentation": {}
+    },
+    {
+        "label": "bin_dir",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "bin_dir = os.path.dirname(abs_file)\nbase = bin_dir[: -len('bin') - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'leadgen-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "base = bin_dir[: -len('bin') - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'leadgen-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"PATH\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'leadgen-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = 'leadgen-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV_PROMPT\"]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV_PROMPT\"] = 'leadgen-py3.10' or os.path.basename(base)\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "prev_length",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "prev_length = len(sys.path)\nfor lib in '../lib/python3.10/site-packages'.split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if '' else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.path[:]",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.real_prefix",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.prefix",
+        "kind": 5,
+        "importPath": ".venv.bin.activate_this",
+        "description": ".venv.bin.activate_this",
+        "peekOfCode": "sys.prefix = base",
+        "detail": ".venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "create_parser",
+        "kind": 2,
+        "importPath": "leadgen.cli.main",
+        "description": "leadgen.cli.main",
+        "peekOfCode": "def create_parser() -> argparse.ArgumentParser:\n    \"\"\"Create command line argument parser.\"\"\"\n    parser = argparse.ArgumentParser(\n        description=\"Lead generation CLI tool\",\n        formatter_class=argparse.RawDescriptionHelpFormatter\n    )\n    parser.add_argument(\n        \"--config-dir\",\n        default=\"config\",\n        help=\"Configuration directory (default: config)\"",
+        "detail": "leadgen.cli.main",
+        "documentation": {}
+    },
+    {
+        "label": "validate_config_command",
+        "kind": 2,
+        "importPath": "leadgen.cli.main",
+        "description": "leadgen.cli.main",
+        "peekOfCode": "def validate_config_command(config_dir: str) -> bool:\n    \"\"\"Validate configuration and show status.\"\"\"\n    try:\n        loader = ConfigLoader(config_dir)\n        config = loader.load_config()\n        logger.success(\"Configuration is valid\")\n        logger.info(f\"Providers: {list(config.providers.keys())}\")\n        logger.info(f\"Email finders: {list(config.email_finders.keys())}\")\n        logger.info(f\"Queries: {len(config.queries)} configured\")\n        logger.info(f\"Proxies: {len(config.proxies)} configured\")",
+        "detail": "leadgen.cli.main",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "leadgen.cli.main",
+        "description": "leadgen.cli.main",
+        "peekOfCode": "def main():\n    \"\"\"Main CLI entry point.\"\"\"\n    parser = create_parser()\n    args = parser.parse_args()\n    # Set logging level\n    if args.verbose:\n        logger.level = \"DEBUG\"\n    # Validate config if requested\n    if args.validate_config:\n        success = validate_config_command(args.config_dir)",
+        "detail": "leadgen.cli.main",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigurationError",
+        "kind": 6,
+        "importPath": "leadgen.config.loader",
+        "description": "leadgen.config.loader",
+        "peekOfCode": "class ConfigurationError(Exception):\n    \"\"\"Raised when configuration is invalid or missing.\"\"\"\n    pass\nclass ConfigLoader:\n    \"\"\"Loads and validates configuration from files.\"\"\"\n    def __init__(self, config_dir: str = \"config\", output_dir =\"output\"):\n        self.config_dir = Path(config_dir)\n        self.output_dir = Path(output_dir)\n    def load_config(self) -> AppConfig:\n        \"\"\"Load complete application configuration.\"\"\"",
+        "detail": "leadgen.config.loader",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigLoader",
+        "kind": 6,
+        "importPath": "leadgen.config.loader",
+        "description": "leadgen.config.loader",
+        "peekOfCode": "class ConfigLoader:\n    \"\"\"Loads and validates configuration from files.\"\"\"\n    def __init__(self, config_dir: str = \"config\", output_dir =\"output\"):\n        self.config_dir = Path(config_dir)\n        self.output_dir = Path(output_dir)\n    def load_config(self) -> AppConfig:\n        \"\"\"Load complete application configuration.\"\"\"\n        config = AppConfig.from_env()\n        # Load from files, with file values taking precedence over defaults\n        # but environment variables taking precedence over file values",
+        "detail": "leadgen.config.loader",
+        "documentation": {}
+    },
+    {
+        "label": "DelayConfig",
+        "kind": 6,
+        "importPath": "leadgen.config.models",
+        "description": "leadgen.config.models",
+        "peekOfCode": "class DelayConfig:\n    \"\"\"Configuration for delays between operations.\"\"\"\n    provider_delay: float = 0.0  # seconds between provider requests\n    finder_delay: float = 1.0   # seconds before starting email finding\n    domain_delay: float = 5.0    # seconds between domain requests\n    request_delay: float = 1.0   # seconds between individual requests\n@dataclass \nclass ProxyConfig:\n    \"\"\"Configuration for proxy settings.\"\"\"\n    enabled: bool = True",
+        "detail": "leadgen.config.models",
+        "documentation": {}
+    },
+    {
+        "label": "ProxyConfig",
+        "kind": 6,
+        "importPath": "leadgen.config.models",
+        "description": "leadgen.config.models",
+        "peekOfCode": "class ProxyConfig:\n    \"\"\"Configuration for proxy settings.\"\"\"\n    enabled: bool = True\n    rotation: str = \"round_robin\"  # round_robin, random\n    timeout: float = 10.0\n@dataclass\nclass OutputConfig:\n    \"\"\"Configuration for output settings.\"\"\"\n    format: str = \"xlsx\"  # jsonl, csv, txt,xlxs\n    directory: str = \"output\"",
+        "detail": "leadgen.config.models",
+        "documentation": {}
+    },
+    {
+        "label": "OutputConfig",
+        "kind": 6,
+        "importPath": "leadgen.config.models",
+        "description": "leadgen.config.models",
+        "peekOfCode": "class OutputConfig:\n    \"\"\"Configuration for output settings.\"\"\"\n    format: str = \"xlsx\"  # jsonl, csv, txt,xlxs\n    directory: str = \"output\"\n    companies_file: str = \"companies\"\n    domains_file: str = \"domains\" \n    emails_file: str = \"emails\"\n@dataclass\nclass AppConfig:\n    \"\"\"Main application configuration.\"\"\"",
+        "detail": "leadgen.config.models",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "kind": 6,
+        "importPath": "leadgen.config.models",
+        "description": "leadgen.config.models",
+        "peekOfCode": "class AppConfig:\n    \"\"\"Main application configuration.\"\"\"\n    providers: Dict[str, str] = field(default_factory=dict)\n    email_finders: Dict[str, str] = field(default_factory=dict)\n    proxies: List[str] = field(default_factory=list)\n    queries: List[str] = field(default_factory=list)\n    run_email_finder_alone: bool = False\n    # Sub-configurations\n    delays: DelayConfig = field(default_factory=DelayConfig)\n    proxy_config: ProxyConfig = field(default_factory=ProxyConfig)",
+        "detail": "leadgen.config.models",
+        "documentation": {}
+    },
+    {
+        "label": "ApolloDomainFinder",
+        "kind": 6,
+        "importPath": "leadgen.domain_finders.apollo",
+        "description": "leadgen.domain_finders.apollo",
+        "peekOfCode": "class ApolloDomainFinder(BaseDomainFinder):\n    \"\"\"apollo.io domain discovery service.\"\"\"\n    BASE_URL = \"https://api.apollo.io/api/v1/mixed_companies/search\"\n    def __init__(self, api_key):\n        super().__init__(api_key=api_key)\n        if not self.api_key:\n            raise DomainFinderError(\"No Hunter.io API key provided\")\n        self.headers ={\n                    'Content-Type': 'application/json',\n                    'X-Api-Key': self.api_key,",
+        "detail": "leadgen.domain_finders.apollo",
+        "documentation": {}
+    },
+    {
+        "label": "BaseDomainFinder",
+        "kind": 6,
+        "importPath": "leadgen.domain_finders.base",
+        "description": "leadgen.domain_finders.base",
+        "peekOfCode": "class BaseDomainFinder(ABC):\n    \"\"\"Abstract class for all domain finders\"\"\"\n    def __init__(self, api_key: str, config: Optional[Dict[str, Any]] = None):\n        self.api_key = api_key\n        self.config = config or {}\n    @abstractmethod\n    def find(self, company: Company, proxy: Optional[Dict[str, str]] = None) -> str|List[Contact]:\n        \"\"\"\n        Perform a domain search and return the domain.\n        Args:",
+        "detail": "leadgen.domain_finders.base",
+        "documentation": {}
+    },
+    {
+        "label": "DomainFinderError",
+        "kind": 6,
+        "importPath": "leadgen.domain_finders.base",
+        "description": "leadgen.domain_finders.base",
+        "peekOfCode": "class DomainFinderError(Exception):\n    \"\"\"Raised when a domain search encounters an error.\"\"\"\n    pass",
+        "detail": "leadgen.domain_finders.base",
+        "documentation": {}
+    },
+    {
+        "label": "HunterDomainFinder",
+        "kind": 6,
+        "importPath": "leadgen.domain_finders.hunter",
+        "description": "leadgen.domain_finders.hunter",
+        "peekOfCode": "class HunterDomainFinder(BaseDomainFinder):\n    \"\"\"Hunter.io domain discovery service.\"\"\"\n    BASE_URL = \"https://api.hunter.io/v2/domain-search\"\n    @property\n    def name(self) -> str:\n        return \"hunter\"\n    def find(self, company: Company, proxy: Optional[Dict[str, str]] = None)->str|Dict[str, Any]:\n        \"\"\"Find emails for a company using Hunter.io API.\n        Returns \n            can be str or contacts",
+        "detail": "leadgen.domain_finders.hunter",
+        "documentation": {}
+    },
+    {
+        "label": "BaseFinder",
+        "kind": 6,
+        "importPath": "leadgen.finders.base",
+        "description": "leadgen.finders.base",
+        "peekOfCode": "class BaseFinder(ABC):\n    \"\"\"Abstract base class for all email finders.\"\"\"\n    def __init__(self, api_key: str):\n        self.api_key = api_key\n    @abstractmethod\n    def find_email(self, domain: str, proxy: Optional[Dict[str, str]] = None) -> EmailResult:\n        \"\"\"\n        Find emails for a domain and return structured result.\n        Args:\n            domain: Domain name to search for emails",
+        "detail": "leadgen.finders.base",
+        "documentation": {}
+    },
+    {
+        "label": "FinderError",
+        "kind": 6,
+        "importPath": "leadgen.finders.base",
+        "description": "leadgen.finders.base",
+        "peekOfCode": "class FinderError(Exception):\n    \"\"\"Raised when a finder encounters an error.\"\"\"\n    pass",
+        "detail": "leadgen.finders.base",
+        "documentation": {}
+    },
+    {
+        "label": "HunterFinder",
+        "kind": 6,
+        "importPath": "leadgen.finders.hunter",
+        "description": "leadgen.finders.hunter",
+        "peekOfCode": "class HunterFinder(BaseFinder):\n    \"\"\"Hunter.io email discovery service.\"\"\"\n    BASE_URL = \"https://api.hunter.io/v2/domain-search\"\n    @property\n    def name(self) -> str:\n        return \"hunter\"\n    def find_email(self, domain: str, proxy: Optional[Dict[str, str]] = None) -> EmailResult:\n        \"\"\"Find emails for a domain using Hunter.io API.\"\"\"\n        config: AppConfig = ConfigLoader().load_config()\n        params = {\"domain\": domain, \"api_key\": self.api_key,\"department\": config.hunter_department or \"executive\"}",
+        "detail": "leadgen.finders.hunter",
+        "documentation": {}
+    },
+    {
+        "label": "OutputManager",
+        "kind": 6,
+        "importPath": "leadgen.io.storage",
+        "description": "leadgen.io.storage",
+        "peekOfCode": "class OutputManager:\n    \"\"\"Manages saving results (companies, domains, emails) to various formats.\"\"\"\n    def __init__(self, config: OutputConfig):\n        self.config = config\n        self.output_dir = Path(config.directory)\n        self.output_dir.mkdir(parents=True, exist_ok=True)\n    # -------------------- PUBLIC --------------------\n    def save_results(\n        self,\n        companies: List[Company],",
+        "detail": "leadgen.io.storage",
+        "documentation": {}
+    },
+    {
+        "label": "Company",
+        "kind": 6,
+        "importPath": "leadgen.models.company",
+        "description": "leadgen.models.company",
+        "peekOfCode": "class Company:\n    \"\"\"Represents a company found by a search provider.\"\"\"\n    id: str\n    name: str\n    url: Optional[str] = None\n    domain: Optional[str] = None\n    address: Optional[str] = None\n    phone: Optional[str] = None\n    def __post_init__(self):\n        \"\"\"Extract domain from URL if not provided and it's not a provider URL.\"\"\"",
+        "detail": "leadgen.models.company",
+        "documentation": {}
+    },
+    {
+        "label": "Contact",
+        "kind": 6,
+        "importPath": "leadgen.models.email_result",
+        "description": "leadgen.models.email_result",
+        "peekOfCode": "class Contact:\n    \"represnts a persons contact\"\n    name: str   \n    company_name: str\n    email: str\n    position: str\n    def to_dict(self) -> dict:\n        \"\"\"Convert to dictionary for serialization.\"\"\"\n        return {\n            \"name\": self.name,",
+        "detail": "leadgen.models.email_result",
+        "documentation": {}
+    },
+    {
+        "label": "EmailResult",
+        "kind": 6,
+        "importPath": "leadgen.models.email_result",
+        "description": "leadgen.models.email_result",
+        "peekOfCode": "class EmailResult:\n    \"\"\"Represents emails found for a domain.\"\"\"\n    domain: str\n    emails: List[Contact]\n    finder: str\n    success: bool = True\n    error: Optional[str] = None\n    def to_dict(self) -> dict:\n        \"\"\"Convert to dictionary for serialization.\"\"\"\n        # This is the key change. We iterate over the list of Contact objects",
+        "detail": "leadgen.models.email_result",
+        "documentation": {}
+    },
+    {
+        "label": "BaseProvider",
+        "kind": 6,
+        "importPath": "leadgen.providers.base",
+        "description": "leadgen.providers.base",
+        "peekOfCode": "class BaseProvider(ABC):\n    \"\"\"Abstract base class for all search providers.\"\"\"\n    def __init__(self, api_key: str, config: Optional[Dict[str, Any]] = None):\n        self.api_key = api_key\n        self.config = config or {}\n    @abstractmethod\n    def search(self, query: str, proxy: Optional[Dict[str, str]] = None) -> List[Company]:\n        \"\"\"\n        Perform a search and return a list of Company objects.\n        Args:",
+        "detail": "leadgen.providers.base",
+        "documentation": {}
+    },
+    {
+        "label": "ProviderError",
+        "kind": 6,
+        "importPath": "leadgen.providers.base",
+        "description": "leadgen.providers.base",
+        "peekOfCode": "class ProviderError(Exception):\n    \"\"\"Raised when a provider encounters an error.\"\"\"\n    pass",
+        "detail": "leadgen.providers.base",
+        "documentation": {}
+    },
+    {
+        "label": "YelpProvider",
+        "kind": 6,
+        "importPath": "leadgen.providers.yelp",
+        "description": "leadgen.providers.yelp",
+        "peekOfCode": "class YelpProvider(BaseProvider):\n    \"\"\"Yelp business search provider.\"\"\"\n    BASE_URL = \"https://api.yelp.com/v3/businesses/search\"\n    def __init__(self, api_key: str, config: Optional[Dict] = None):\n        super().__init__(api_key, config)\n        self.headers = {\"Authorization\": f\"Bearer {self.api_key}\"}\n        self.domain_resolver = DomainResolver()\n        self.config = config or {}\n    @property\n    def name(self) -> str:",
+        "detail": "leadgen.providers.yelp",
+        "documentation": {}
+    },
+    {
+        "label": "DomainResolver",
+        "kind": 6,
+        "importPath": "leadgen.utils.domain",
+        "description": "leadgen.utils.domain",
+        "peekOfCode": "class DomainResolver:\n    \"\"\"Resolves business domains from provider data.\"\"\"\n    # Provider domains to exclude from email discovery\n    PROVIDER_DOMAINS = {\n        \"yelp.com\", \"www.yelp.com\",\n        \"google.com\", \"www.google.com\", \"maps.google.com\",\n        \"facebook.com\", \"www.facebook.com\", \"m.facebook.com\",\n        \"instagram.com\", \"www.instagram.com\",\n        \"twitter.com\", \"www.twitter.com\", \"x.com\",\n        \"linkedin.com\", \"www.linkedin.com\",",
+        "detail": "leadgen.utils.domain",
+        "documentation": {}
+    },
+    {
+        "label": "Logger",
+        "kind": 6,
+        "importPath": "leadgen.utils.logging",
+        "description": "leadgen.utils.logging",
+        "peekOfCode": "class Logger:\n    \"\"\"Simple logger with levels and colors.\"\"\"\n    # ANSI color codes\n    COLORS = {\n        \"DEBUG\": \"\\033[36m\",    # Cyan\n        \"INFO\": \"\\033[32m\",     # Green\n        \"WARNING\": \"\\033[33m\",  # Yellow\n        \"ERROR\": \"\\033[31m\",    # Red\n        \"RESET\": \"\\033[0m\"      # Reset\n    }",
+        "detail": "leadgen.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "leadgen.utils.logging",
+        "description": "leadgen.utils.logging",
+        "peekOfCode": "logger = Logger()",
+        "detail": "leadgen.utils.logging",
+        "documentation": {}
+    },
+    {
+        "label": "ProxyError",
+        "kind": 6,
+        "importPath": "leadgen.utils.proxy",
+        "description": "leadgen.utils.proxy",
+        "peekOfCode": "class ProxyError(Exception):\n    \"\"\"Raised when all proxies fail or a proxy request fails.\"\"\"\n    pass\nclass ProxyManager:\n    def __init__(self, test_url: str = \"https://api.yelp.com/v3/businesses/search\", test_interval: int = 10, proxies_file=\"config/proxies.txt\"):\n        \"\"\"\n        Args:\n            config: Config loader instance\n            test_url: URL to test proxies against (default Yelp API)\n            test_interval: how many times to use proxy before re-testing",
+        "detail": "leadgen.utils.proxy",
+        "documentation": {}
+    },
+    {
+        "label": "ProxyManager",
+        "kind": 6,
+        "importPath": "leadgen.utils.proxy",
+        "description": "leadgen.utils.proxy",
+        "peekOfCode": "class ProxyManager:\n    def __init__(self, test_url: str = \"https://api.yelp.com/v3/businesses/search\", test_interval: int = 10, proxies_file=\"config/proxies.txt\"):\n        \"\"\"\n        Args:\n            config: Config loader instance\n            test_url: URL to test proxies against (default Yelp API)\n            test_interval: how many times to use proxy before re-testing\n        \"\"\"\n        self.proxy_index = 0\n        self.use_counts = {}  # track usage count per proxy",
+        "detail": "leadgen.utils.proxy",
+        "documentation": {}
+    },
+    {
+        "label": "LeadOrchestrator",
+        "kind": 6,
+        "importPath": "leadgen.orchestrator",
+        "description": "leadgen.orchestrator",
+        "peekOfCode": "class LeadOrchestrator:\n    \"\"\"Orchestrates the lead generation process.\"\"\"\n    def __init__(self, config: AppConfig):\n        self.config = config\n        self.providers: Dict[str, BaseProvider] = {}\n        self.finders: Dict[str, BaseFinder] = {}\n        self.domain_finders :Dict[str, BaseDomainFinder] ={}\n        # Results storage\n        self.companies: List[Company] = []\n        self.domains: Set[str] = set()",
+        "detail": "leadgen.orchestrator",
+        "documentation": {}
+    }
+]
