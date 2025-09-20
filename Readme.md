@@ -4,12 +4,12 @@
 This is a Python-based email finder application that searches for companies using various providers (Yelp, Google) and then finds email addresses for those companies using email discovery services (Hunter, Snov). The application is designed to help with lead generation and business intelligence.
 
 ## Recent Changes
-- **September 19, 2025**: Successfully set up the project in Replit environment
-  - Installed Python 3.11 and required dependencies
-  - Fixed proxy handling and type annotation issues
-  - Configured console workflow for running the application
-  - Disabled SOCKS proxy support temporarily (using HTTP proxies only)
-  - Successfully tested the full application pipeline
+- **September 20, 2025**: Fresh GitHub import setup in Replit environment
+  - Installed Python 3.11 and all required dependencies via pip
+  - Created config directory with template configuration files
+  - Set up "Email Finder CLI" workflow for console-based execution
+  - Validated application structure and core functionality
+  - Application ready for use with valid API keys
 
 ## Project Architecture
 
@@ -35,20 +35,29 @@ This is a Python-based email finder application that searches for companies usin
 5. Save results to output files
 
 ### Current Status
-- ✅ Python environment configured
-- ✅ All dependencies installed
-- ✅ Console workflow set up and tested
-- ✅ Successfully finding companies via Yelp provider
-- ✅ Successfully finding emails via Hunter service
-- ✅ Results being saved to output files
+- ✅ Python 3.11 environment configured in Replit
+- ✅ All dependencies installed via pip
+- ✅ Console workflow "Email Finder CLI" configured and tested
+- ✅ Configuration files created with placeholder API keys
+- ✅ Application structure validated and ready for use
+- ⚠️ Requires valid API keys for Yelp and Hunter services to function
 
 ### Known Limitations
 - SOCKS proxy support disabled (requires additional dependencies)
 - Google provider requires valid API key and custom search engine ID
 - Some type annotation warnings remain but don't affect functionality
 
+## Setup Instructions
+1. **Add API Keys**: Edit the configuration files to add your real API keys:
+   - `config/providers.txt`: Replace `test_yelp_key_placeholder` with your Yelp API key
+   - `config/email_finders.txt`: Replace `test_hunter_key_placeholder` with your Hunter API key
+
+2. **Customize Search Queries**: Edit `config/queries.txt` to add your own search terms
+
+3. **Run the Application**: The "Email Finder CLI" workflow will automatically execute the pipeline
+
 ## Usage
-The application runs automatically via the "Email Finder" workflow. Results are saved in the `output/` directory:
+The application runs via the "Email Finder CLI" workflow. Results are saved in the `output/` directory:
 - `companies.txt`: Found company information
 - `domains.txt`: Extracted domain names  
 - `emails.txt`: Discovered email addresses
