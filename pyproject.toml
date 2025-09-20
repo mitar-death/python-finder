@@ -6,7 +6,7 @@ package-mode = false
 authors = [
     {name = "Anonymous User",email = "golobal@gmail.com"}
 ]
-readme = "README.md"
+readme = "Readme.md"
 requires-python = ">=3.10"
 dependencies = [
     "requests[socks] (>=2.32.5,<3.0.0)",
