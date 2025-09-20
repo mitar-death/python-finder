@@ -45,23 +45,25 @@ class LeadOrchestrator:
             # "google": GoogleProvider,  # Will add when dependencies are available
         }
 
-        for name, api_key in self.config.providers.items():
+        for name, api_keys in self.config.providers.items():
             if name.lower() in provider_map:
-                try:
-                    provider_config = {}
-                    if name.lower() == "yelp":
-                        provider_config = {
-                            "location": self.config.location,
-                            "limit": self.config.yelp_limit
-                        }
+                for i, api_key in enumerate(api_keys):
+                    try:
+                        provider_config = {}
+                        if name.lower() == "yelp":
+                            provider_config = {
+                                "location": self.config.location,
+                                "limit": self.config.yelp_limit
+                            }
 
-                    provider = provider_map[name.lower()](api_key,
-                                                          provider_config)
-                    self.providers[name] = provider
-                    logger.info(f"Initialized {name} provider")
+                        provider = provider_map[name.lower()](api_key, provider_config)
+                        # Use unique keys for multiple instances of same provider type
+                        provider_key = f"{name}_{i+1}" if len(api_keys) > 1 else name
+                        self.providers[provider_key] = provider
+                        logger.info(f"Initialized {provider_key} provider")
 
-                except Exception as e:
-                    logger.error(f"Failed to initialize {name} provider: {e}")
+                    except Exception as e:
+                        logger.error(f"Failed to initialize {name} provider instance {i+1}: {e}")
             else:
                 logger.warning(f"Unknown provider: {name}")
 
@@ -74,15 +76,18 @@ class LeadOrchestrator:
         }
         
         domain_finders = ConfigLoader()._load_providers('domain_finders.txt')
-        for name, api_key in domain_finders.items():
+        for name, api_keys in domain_finders.items():
             if name.lower() in domain_finder_map:
-                try:
-                    finder = domain_finder_map[name.lower()](api_key)
-                    self.domain_finders[name] = finder
-                    logger.info(f"Initialized {name} domain finder")
+                for i, api_key in enumerate(api_keys):
+                    try:
+                        finder = domain_finder_map[name.lower()](api_key)
+                        # Use unique keys for multiple instances of same finder type
+                        finder_key = f"{name}_{i+1}" if len(api_keys) > 1 else name
+                        self.domain_finders[finder_key] = finder
+                        logger.info(f"Initialized {finder_key} domain finder")
 
-                except Exception as e:
-                    logger.error(f"Failed to initialize {name} finder: {e}")
+                    except Exception as e:
+                        logger.error(f"Failed to initialize {name} domain finder instance {i+1}: {e}")
             else:
                 logger.warning(f"Unknown domain finder: {name}")
 
@@ -95,15 +100,18 @@ class LeadOrchestrator:
             # "snov": SnovFinder,  # Will add when needed
         }
 
-        for name, api_key in self.config.email_finders.items():
+        for name, api_keys in self.config.email_finders.items():
             if name.lower() in finder_map:
-                try:
-                    finder = finder_map[name.lower()](api_key)
-                    self.finders[name] = finder
-                    logger.info(f"Initialized {name} email finder")
+                for i, api_key in enumerate(api_keys):
+                    try:
+                        finder = finder_map[name.lower()](api_key)
+                        # Use unique keys for multiple instances of same finder type
+                        finder_key = f"{name}_{i+1}" if len(api_keys) > 1 else name
+                        self.finders[finder_key] = finder
+                        logger.info(f"Initialized {finder_key} email finder")
 
-                except Exception as e:
-                    logger.error(f"Failed to initialize {name} finder: {e}")
+                    except Exception as e:
+                        logger.error(f"Failed to initialize {name} email finder instance {i+1}: {e}")
             else:
                 logger.warning(f"Unknown email finder: {name}")
 

@@ -33,8 +33,8 @@ class OutputConfig:
 @dataclass
 class AppConfig:
     """Main application configuration."""
-    providers: Dict[str, str] = field(default_factory=dict)
-    email_finders: Dict[str, str] = field(default_factory=dict)
+    providers: Dict[str, List[str]] = field(default_factory=dict)
+    email_finders: Dict[str, List[str]] = field(default_factory=dict)
     proxies: List[str] = field(default_factory=list)
     queries: List[str] = field(default_factory=list)
     run_email_finder_alone: bool = False
@@ -66,13 +66,13 @@ class AppConfig:
         
         # Override with environment variables if present
         if hunter_key := os.getenv("HUNTER_API_KEY"):
-            config.email_finders["hunter"] = hunter_key
+            config.email_finders["hunter"] = [hunter_key]
         if snov_key := os.getenv("SNOV_API_KEY"):
-            config.email_finders["snov"] = snov_key
+            config.email_finders["snov"] = [snov_key]
         if yelp_key := os.getenv("YELP_API_KEY"):
-            config.providers["yelp"] = yelp_key
+            config.providers["yelp"] = [yelp_key]
         if google_key := os.getenv("GOOGLE_API_KEY"):
-            config.providers["google"] = google_key
+            config.providers["google"] = [google_key]
         if google_cx := os.getenv("GOOGLE_CX"):
             config.google_cx = google_cx
             

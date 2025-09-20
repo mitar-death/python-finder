@@ -27,13 +27,19 @@ class ConfigLoader:
         file_finders = self._load_providers("email_finders.txt")
         
         # Merge with environment overrides
-        for name, key in file_providers.items():
+        for name, keys in file_providers.items():
             if name not in config.providers:  # Don't override env vars
-                config.providers[name] = key
+                config.providers[name] = keys
+            else:
+                # Append file keys to existing env keys
+                config.providers[name].extend(keys)
                 
-        for name, key in file_finders.items():
+        for name, keys in file_finders.items():
             if name not in config.email_finders:  # Don't override env vars
-                config.email_finders[name] = key
+                config.email_finders[name] = keys
+            else:
+                # Append file keys to existing env keys
+                config.email_finders[name].extend(keys)
         
         config.proxies = self._load_proxies("proxies.txt")
         config.queries = self._load_queries("queries.txt")
@@ -41,8 +47,8 @@ class ConfigLoader:
         self._validate_config(config)
         return config
     
-    def _load_providers(self, filename: str) -> Dict[str, str]:
-        """Load provider configuration from file."""
+    def _load_providers(self, filename: str) -> Dict[str, List[str]]:
+        """Load provider configuration from file, supporting multiple API keys per provider."""
         file_path = self.config_dir / filename
         
         if not file_path.exists():
@@ -66,7 +72,10 @@ class ConfigLoader:
                         f"{filename}:{line_num}: Empty provider name or API key"
                     )
                 
-                providers[name] = key
+                # Support multiple API keys for the same provider type
+                if name not in providers:
+                    providers[name] = []
+                providers[name].append(key)
                 
         except Exception as e:
             if isinstance(e, ConfigurationError):

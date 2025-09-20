@@ -36,7 +36,7 @@ class HunterFinder(BaseFinder):
             data = response.json()
             
             # Extract emails from Hunter.io response
-            logger.info(f"Hunter.io returns {data} for email {domain}")
+            logger.debug(f"Hunter.io returns {data} for email {domain}")
             
             contacts = self._parse_email_data(data)
             
@@ -82,19 +82,19 @@ class HunterFinder(BaseFinder):
         """
         contacts = []
     
-        company_name = data["data"]["organization"]
         email_data = data.get("data", {})
+        company_name = email_data.get("organization") or ""
 
         emails_list = email_data.get("emails", [])
 
         for email_entry in emails_list:
-            first_name = email_entry["first_name"] # remove trailing comma
-            last_name = email_entry["last_name"]
+            first_name = email_entry.get("first_name") or ""
+            last_name = email_entry.get("last_name") or ""
             contact = Contact(
                 name=f"{first_name} {last_name}".strip(),
-                email=email_entry["value"],
+                email=email_entry.get("value", ""),
                 company_name=company_name,
-                position=email_entry["position"]
+                position=email_entry.get("position", "")
             )
             contacts.append(contact)
 
