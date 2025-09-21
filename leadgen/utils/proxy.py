@@ -1,17 +1,27 @@
 import os
+from typing import Optional, Dict, List
 import requests
-import time
-from typing import Optional, Dict, List, Union
-from leadgen.config.loader import ConfigLoader 
+from leadgen.config.loader import ConfigLoader
 from leadgen.utils.logging import logger
-from leadgen.domain_finders.base import DomainFinderError
+
 
 class ProxyError(Exception):
     """Raised when all proxies fail or a proxy request fails."""
-    pass
+
+
+class CustomHttpError(Exception):
+    """Raised when a proxy request fails due to a custom HTTP error."""
+
 
 class ProxyManager:
-    def __init__(self, test_url: str = "https://api.yelp.com/v3/businesses/search", test_interval: int = 10, proxies_file="config/proxies.txt"):
+    """Proxy Manager class"""
+
+    def __init__(
+        self,
+        test_url: str = "https://api.yelp.com/v3/businesses/search",
+        test_interval: int = 10,
+        proxies_file="config/proxies.txt",
+    ):
         """
         Args:
             config: Config loader instance
@@ -35,9 +45,7 @@ class ProxyManager:
         """Test if a proxy is alive by making a HEAD request."""
         try:
             response = requests.head(
-                self.test_url,
-                proxies=self._normalize_proxy(proxy_url),
-                timeout=5
+                self.test_url, proxies=self._normalize_proxy(proxy_url), timeout=5
             )
             return response.status_code < 500
         except Exception as e:
@@ -47,9 +55,9 @@ class ProxyManager:
     def _disable_proxy(self, proxy_url: str):
         """Comment out dead proxy in proxies.txt so it won’t be used again."""
         try:
-            with open(self.proxies_file, "r") as f:
+            with open(self.proxies_file, "r", encoding="utf-8") as f:
                 lines = f.readlines()
-            with open(self.proxies_file, "w") as f:
+            with open(self.proxies_file, "w", encoding="utf-8") as f:
                 for line in lines:
                     if line.strip() == proxy_url and not line.strip().startswith("#"):
                         f.write(f"# {line.strip()}  # disabled due to failure\n")
@@ -59,11 +67,18 @@ class ProxyManager:
         except Exception as e:
             logger.error(f"Failed to disable proxy {proxy_url}: {e}")
 
-    def request(self, method: str, url: str, max_attempts: Optional[int] = None, 
-                per_request: bool = True, timeout: int = 10, **kwargs) -> Optional[requests.Response]:
+    def request(
+        self,
+        method: str,
+        url: str,
+        max_attempts: Optional[int] = None,
+        per_request: bool = True,
+        timeout: int = 10,
+        **kwargs,
+    ) -> Optional[requests.Response]:
         """
         Enhanced request method with per-request proxy rotation and retry logic.
-        
+
         Args:
             method: HTTP method (GET, POST, etc.)
             url: Target URL
@@ -71,92 +86,98 @@ class ProxyManager:
             per_request: Whether to rotate proxy per request (default: True)
             timeout: Request timeout in seconds
             **kwargs: Additional arguments passed to requests
-            
+
         Returns:
             Response object or None if all attempts failed
-            
+
         Raises:
             ProxyError: If all proxies fail
             requests.HTTPError: For HTTP errors (non-proxy related)
         """
         if max_attempts is None:
             max_attempts = len(self.proxies) + 1 if self.proxies else 3
-            
+
         last_exception = None
-        
+
         for attempt in range(max_attempts):
             proxy = None
             if per_request and self.proxies:
                 proxy = self._get_proxy()
-                logger.debug(f"Attempt {attempt + 1}/{max_attempts}: Using proxy {proxy}")
-            elif not per_request and 'proxies' not in kwargs and self.proxies:
+                logger.debug(
+                    f"Attempt {attempt + 1}/{max_attempts}: Using proxy {proxy}"
+                )
+            elif not per_request and "proxies" not in kwargs and self.proxies:
                 proxy = self._get_proxy()
-                
+
             # Set up request parameters
             request_kwargs = kwargs.copy()
             if proxy:
-                request_kwargs['proxies'] = proxy
-            request_kwargs['timeout'] = timeout
-            
+                request_kwargs["proxies"] = proxy
+            request_kwargs["timeout"] = timeout
+
             try:
                 response = requests.request(method, url, **request_kwargs)
-                
-                
+
                 logger.debug(f"Using proxy {proxy} for {url}")
-    
+
                 if response.status_code in [403, 407]:  # Proxy authentication/forbidden
                     if proxy:
-                        proxy_url = proxy.get('http', proxy.get('https', ''))
-                        logger.warning(f"Proxy authentication failed (status {response.status_code}): {proxy_url}")
+                        proxy_url = proxy.get("http", proxy.get("https", ""))
+                        logger.warning(
+                            f"Proxy authentication failed (status {response.status_code}): {proxy_url}"
+                        )
                         self._disable_proxy(proxy_url)
                     continue
-                    
+
                 response.raise_for_status()
                 logger.debug(f"Request successful on attempt {attempt + 1}")
                 return response
-                
+
             except requests.exceptions.ProxyError as e:
                 logger.warning(f"Proxy error on attempt {attempt + 1}: {e}")
                 if proxy:
-                    proxy_url = proxy.get('http', proxy.get('https', ''))
+                    proxy_url = proxy.get("http", proxy.get("https", ""))
                     self._disable_proxy(proxy_url)
                 last_exception = e
                 continue
-                
-            except (requests.exceptions.ConnectTimeout, 
-                    requests.exceptions.ReadTimeout,
-                    requests.exceptions.ConnectionError) as e:
+
+            except (
+                requests.exceptions.ConnectTimeout,
+                requests.exceptions.ReadTimeout,
+                requests.exceptions.ConnectionError,
+            ) as e:
                 logger.warning(f"Connection error on attempt {attempt + 1}: {e}")
                 if proxy:
-                    proxy_url = proxy.get('http', proxy.get('https', ''))
-                    logger.warning(f"Disabling proxy due to connection error: {proxy_url}")
+                    proxy_url = proxy.get("http", proxy.get("https", ""))
+                    logger.warning(
+                        f"Disabling proxy due to connection error: {proxy_url}"
+                    )
                     self._disable_proxy(proxy_url)
                 last_exception = e
                 continue
-                
+
             except requests.exceptions.HTTPError as e:
                 # Don't disable proxy for HTTP errors - these are server-side issues
                 logger.error(f"HTTP error on attempt {attempt + 1}: {e}")
                 raise e
-                
+
             except Exception as e:
                 logger.error(f"Unexpected error on attempt {attempt + 1}: {e}")
                 last_exception = e
                 continue
-                
+
         # All attempts failed
         if last_exception:
             if isinstance(last_exception, requests.exceptions.ProxyError):
-                raise ProxyError(f"All proxy attempts failed. Last error: {last_exception}")
-            else:
-                raise last_exception
-        else:
-            raise ProxyError("All request attempts failed")
+                raise ProxyError(
+                    f"All proxy attempts failed. Last error: {last_exception}"
+                )
+            raise last_exception
+        raise ProxyError("All request attempts failed")
 
     def _get_proxy(self) -> Optional[Dict[str, str]]:
         """Get next proxy in rotation or None if no proxies."""
-        
-        
+
         self.proxies = [p for p in self.proxies if p and p.strip()]
         if not self.proxies:
             return None
@@ -173,15 +194,17 @@ class ProxyManager:
             if not self._test_proxy(proxy_url):
                 self._disable_proxy(proxy_url)
                 # remove it from rotation
-                self.proxies = [p for p in self.proxies if not p.strip().startswith("#")]
+                self.proxies = [
+                    p for p in self.proxies if not p.strip().startswith("#")
+                ]
                 return self._get_proxy()  # try next one
-            else:
-                logger.info(f"Proxy {proxy_url} still working")
+            logger.info(f"Proxy {proxy_url} still working")
             self.use_counts[proxy_url] = 0  # reset counter
-
         return self._normalize_proxy(proxy_url)
-    
-    def safe_request(self, method: str, url: str, **kwargs) -> Optional[requests.Response]:
+
+    def safe_request(
+        self, method: str, url: str, **kwargs
+    ) -> Optional[requests.Response]:
         """
         Perform a request with proxy rotation.
         If a proxy fails, disable it and retry with next proxy.
@@ -192,8 +215,8 @@ class ProxyManager:
             return response
         except requests.exceptions.ProxyError as e:
             logger.error(f"Proxy {kwargs.get('proxies')} failed: {e}, disabling it")
-            self._disable_proxy(kwargs.get('proxies'))
+            self._disable_proxy(kwargs.get("proxies"))
             raise ProxyError(f"Proxy failed: {kwargs.get('proxies')}") from e
         except requests.HTTPError as e:
             logger.error(f"Request failed: {e}")
-            raise Exception(f"Request failed: {e}") from e
+            raise e

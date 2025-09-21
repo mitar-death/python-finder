@@ -1,0 +1,31 @@
+[MASTER]
+ignore = migrations, .venv, build, dist, lambdas/email_service/phpserialize.py, tests  # Directories and files to ignore
+jobs = 1  # Number of parallel jobs to use
+persistent = yes  # Save reports for later comparison
+
+[MESSAGES CONTROL]
+disable =
+    C0114,  # Missing module docstring
+    E0401,  # Missing module
+    W0718,  # broad-exception-caught
+    W1203,  # logging-fstring-interpolation
+    R0914,
+    R0912,
+    R0913,  # Too many arguments
+    R0917,  # Too many poitional arguments
+    ; C0115,  # Missing class docstring
+    ; C0116,  # Missing function or method docstring
+    ; R0903,  # Too few public methods
+
+[REPORTS]
+output-format = colorized  # Use colored output in terminals
+reports = no  # Disable full reports to keep logs concise
+
+[FORMAT]
+max-line-length = 110  # Match black's line length
+
+[TYPECHECK]
+ignored-modules = flask, requests  # Modules that pylint cannot import in static analysis
+
+[LOGGING]
+logging-modules = logging

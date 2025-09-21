@@ -1,12 +1,14 @@
 """Configuration models."""
+
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict, List
 import os
 
 
 @dataclass
 class DelayConfig:
     """Configuration for delays between operations."""
+
     provider_delay: float = 0.0  # seconds between provider requests
     finder_delay: float = 1.0  # seconds before starting email finding
     domain_delay: float = 5.0  # seconds between domain requests
@@ -16,6 +18,7 @@ class DelayConfig:
 @dataclass
 class ProxyConfig:
     """Configuration for proxy settings."""
+
     enabled: bool = True
     rotation: str = "round_robin"  # round_robin, random
     timeout: float = 10.0
@@ -24,6 +27,7 @@ class ProxyConfig:
 @dataclass
 class OutputConfig:
     """Configuration for output settings."""
+
     format: str = "xlsx"  # jsonl, csv, txt,xlxs
     directory: str = "output"
     companies_file: str = "companies"
@@ -34,6 +38,7 @@ class OutputConfig:
 @dataclass
 class AppConfig:
     """Main application configuration."""
+
     providers: Dict[str, List[str]] = field(default_factory=dict)
     email_finders: Dict[str, List[str]] = field(default_factory=dict)
     proxies: List[str] = field(default_factory=list)

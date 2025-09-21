@@ -1,21 +1,21 @@
 """Main orchestrator for the lead generation process."""
-import sys
+
 import time
-import random
-from typing import Dict, List, Set, Optional
-from leadgen.utils.proxy import ProxyManager
-from .config.loader import ConfigLoader, ConfigurationError
+from typing import Dict, List, Set
+from leadgen.utils.proxy import CustomHttpError, ProxyManager
+from leadgen.domain_finders.base import BaseDomainFinder
+from leadgen.providers.google import GooglePlacesProvider
+from leadgen.domain_finders.hunter import HunterDomainFinder
+from .utils.domain import DomainResolver
+from .config.loader import ConfigLoader
 from .config.models import AppConfig
 from .models.company import Company
 from .models.email_result import EmailResult
 from .providers.base import BaseProvider, ProviderError
 from .providers.yelp import YelpProvider
-from .finders.base import BaseFinder
-from .finders.hunter import HunterFinder
+from .email_finders.base import BaseFinder
+from .email_finders.hunter import HunterFinder
 from .utils.logging import logger
-from .utils.domain import DomainResolver
-from leadgen.domain_finders.base import BaseDomainFinder, BaseDomainFinder
-from leadgen.domain_finders.hunter import HunterDomainFinder
 
 
 class LeadOrchestrator:
@@ -42,7 +42,7 @@ class LeadOrchestrator:
         """Initialize search providers."""
         provider_map = {
             "yelp": YelpProvider,
-            # "google": GoogleProvider,  # Will add when dependencies are available
+            "google": GooglePlacesProvider,  # Will add when dependencies are available
         }
 
         for name, api_keys in self.config.providers.items():
@@ -53,14 +53,12 @@ class LeadOrchestrator:
                         if name.lower() == "yelp":
                             provider_config = {
                                 "location": self.config.location,
-                                "limit": self.config.yelp_limit
+                                "limit": self.config.yelp_limit,
                             }
 
-                        provider = provider_map[name.lower()](api_key,
-                                                              provider_config)
+                        provider = provider_map[name.lower()](api_key, provider_config)
                         # Use unique keys for multiple instances of same provider type
-                        provider_key = f"{name}_{i+1}" if len(
-                            api_keys) > 1 else name
+                        provider_key = f"{name}_{i+1}" if len(api_keys) > 1 else name
                         self.providers[provider_key] = provider
                         logger.info(f"Initialized {provider_key} provider")
 
@@ -78,15 +76,14 @@ class LeadOrchestrator:
             "hunter": HunterDomainFinder,
         }
 
-        domain_finders = ConfigLoader()._load_providers('domain_finders.txt')
+        domain_finders = ConfigLoader()._load_providers("domain_finders.txt")
         for name, api_keys in domain_finders.items():
             if name.lower() in domain_finder_map:
                 for i, api_key in enumerate(api_keys):
                     try:
                         finder = domain_finder_map[name.lower()](api_key)
                         # Use unique keys for multiple instances of same finder type
-                        finder_key = f"{name}_{i+1}" if len(
-                            api_keys) > 1 else name
+                        finder_key = f"{name}_{i+1}" if len(api_keys) > 1 else name
                         self.domain_finders[finder_key] = finder
                         logger.info(f"Initialized {finder_key} domain finder")
 
@@ -101,7 +98,6 @@ class LeadOrchestrator:
         """Initialize email finders."""
         finder_map = {
             "hunter": HunterFinder,
-
             # "snov": SnovFinder,  # Will add when needed
         }
 
@@ -111,8 +107,7 @@ class LeadOrchestrator:
                     try:
                         finder = finder_map[name.lower()](api_key)
                         # Use unique keys for multiple instances of same finder type
-                        finder_key = f"{name}_{i+1}" if len(
-                            api_keys) > 1 else name
+                        finder_key = f"{name}_{i+1}" if len(api_keys) > 1 else name
                         self.finders[finder_key] = finder
                         logger.info(f"Initialized {finder_key} email finder")
 
@@ -144,14 +139,11 @@ class LeadOrchestrator:
             for query in self.config.queries:
                 try:
                     proxy = ProxyManager()._get_proxy()
-                    proxy_info = f"proxy {proxy}" if proxy else "no proxy"
-                    logger.info(
-                        f"[{provider_name.upper()}] Searching '{query}'")
+                    logger.info(f"[{provider_name.upper()}] Searching '{query}'")
 
                     companies = provider.search(query, proxy)
 
-                    logger.success(
-                        f"Found {len(companies)} companies for '{query}'")
+                    logger.success(f"Found {len(companies)} companies for '{query}'")
 
                     all_companies.extend(companies)
                     # Rate limiting between requests
@@ -163,6 +155,10 @@ class LeadOrchestrator:
                         f"[{provider_name.upper()}] Provider error for '{query}': {e}"
                     )
                     continue
+                except CustomHttpError as e:
+                    logger.error(f"[{provider_name.upper()}] : {e}")
+                    continue
+
                 except Exception as e:
                     logger.error(
                         f"[{provider_name.upper()}] Unexpected error for '{query}': {e}"
@@ -186,22 +182,22 @@ class LeadOrchestrator:
                     self.state_store.add_seen_company(company)
                 else:
                     skipped_count += 1
-
-            logger.info(
-                f"Found {len(new_companies)} new companies (skipped {skipped_count} already processed)"
-            )
-            self.companies = new_companies
+            if new_companies:
+                logger.info(
+                    f"Found {len(new_companies)} new companies (skipped {skipped_count} already processed)"
+                )
+                self.companies = new_companies
         else:
             # Fallback to old logic if no state store
-            old_companies = ConfigLoader()._load_companies(f"companies.txt")
+            old_companies = ConfigLoader()._load_companies("companies.txt")
             filtered_companies = [
-                company for company in all_companies
+                company
+                for company in all_companies
                 if company.name not in old_companies
             ]
             logger.info(f"Found {len(filtered_companies)} new companies")
             self.companies = filtered_companies
-        logger.success(
-            f"Search phase complete: {len(self.companies)} companies")
+        logger.success(f"Search phase complete: {len(self.companies)} companies")
 
         # Save state after company search phase
         if self.state_store:
@@ -211,8 +207,7 @@ class LeadOrchestrator:
     def run_email_discovery(self):
         """Run the email discovery phase."""
         if not self.finders:
-            logger.warning(
-                "No email finders configured, skipping email discovery")
+            logger.warning("No email finders configured, skipping email discovery")
             return
 
         if not self.domains:
@@ -244,8 +239,7 @@ class LeadOrchestrator:
         else:
             domains_to_process = list(self.domains)
 
-        logger.info(
-            f"Processing emails for {len(domains_to_process)} new domains")
+        logger.info(f"Processing emails for {len(domains_to_process)} new domains")
 
         for finder_name, finder in self.finders.items():
             logger.info(f"Running {finder_name} email finder")
@@ -265,10 +259,8 @@ class LeadOrchestrator:
                         # Mark emails as seen in StateStore
                         if self.state_store:
                             for email_obj in result.emails:
-                                if hasattr(email_obj,
-                                           'email') and email_obj.email:
-                                    self.state_store.add_seen_email(
-                                        email_obj.email)
+                                if hasattr(email_obj, "email") and email_obj.email:
+                                    self.state_store.add_seen_email(email_obj.email)
                         logger.success(
                             f"Found {len(result.emails)} emails for '{domain}'"
                         )
@@ -288,18 +280,18 @@ class LeadOrchestrator:
                         f"[{finder_name.upper()}] Unexpected error for '{domain}': {e}"
                     )
                     # Create failed result
-                    failed_result = EmailResult(domain=domain,
-                                                emails=[],
-                                                finder=finder_name,
-                                                success=False,
-                                                error=str(e))
+                    failed_result = EmailResult(
+                        domain=domain,
+                        emails=[],
+                        finder=finder_name,
+                        success=False,
+                        error=str(e),
+                    )
                     self.email_results.append(failed_result)
 
                     continue
 
-        successful_results = [
-            r for r in self.email_results if r.success and r.emails
-        ]
+        successful_results = [r for r in self.email_results if r.success and r.emails]
         logger.success(
             f"Email discovery complete: {len(successful_results)} domains with emails found"
         )
@@ -318,8 +310,11 @@ class LeadOrchestrator:
             found_result = False
 
             if self.domain_finders:
-                finders_iter = self.domain_finders.items() if isinstance(
-                    self.domain_finders, dict) else self.domain_finders
+                finders_iter = (
+                    self.domain_finders.items()
+                    if isinstance(self.domain_finders, dict)
+                    else self.domain_finders
+                )
 
                 for name, domain_finder in finders_iter:
                     if found_result:
@@ -327,22 +322,22 @@ class LeadOrchestrator:
 
                     try:
                         proxy = ProxyManager()._get_proxy()
-                        proxy_info = f"proxy {proxy}" if proxy else "no proxy"
                         logger.info(
                             f"[{name.upper()}] Finding emails for '{company_name}'"
                         )
                         res = domain_finder.find(
-                            company,
-                            proxy=proxy)  #hwhere safe_request is called
+                            company, proxy=proxy
+                        )  # hwhere safe_request is called
 
                         if res and isinstance(res, str):
                             # Domain found
                             domain = resolver._clean_and_extract_domain(res)
-                            if domain and resolver._is_valid_business_domain(
-                                    domain):
+                            if domain and resolver._is_valid_business_domain(domain):
                                 # Check if domain already processed (StateStore integration)
-                                if self.state_store and self.state_store.is_seen_domain(
-                                        domain):
+                                if (
+                                    self.state_store
+                                    and self.state_store.is_seen_domain(domain)
+                                ):
                                     logger.info(
                                         f"Domain {domain} already processed, skipping"
                                     )
@@ -350,8 +345,7 @@ class LeadOrchestrator:
                                     company.domain = domain
                                     self.domains.add(domain)
                                     if self.state_store:
-                                        self.state_store.add_seen_domain(
-                                            domain)
+                                        self.state_store.add_seen_domain(domain)
                                     logger.info(
                                         f"Found domain {domain} for {company_name}"
                                     )
@@ -359,31 +353,34 @@ class LeadOrchestrator:
 
                         else:
                             # For hunter domain finder that returns emails instead of domains
-                            domain = res["data"]["domain"]
+                            domain = res["data"]["domain"] or ""
                             contacts = domain_finder._parse_email_data(res)
 
                             # Check if domain already processed
                             if self.state_store and self.state_store.is_seen_domain(
-                                    domain):
+                                domain
+                            ):
                                 logger.info(
                                     f"Domain {domain} already processed, skipping"
                                 )
                             else:
                                 # Emails found
-                                result = EmailResult(domain=domain,
-                                                     emails=contacts,
-                                                     finder=name,
-                                                     success=True)
+                                result = EmailResult(
+                                    domain=domain,
+                                    emails=contacts,
+                                    finder=name,
+                                    success=True,
+                                )
 
                                 self.domains.add(domain)
                                 if self.state_store:
                                     self.state_store.add_seen_domain(domain)
                                     # Also mark emails as seen
                                     for contact in contacts:
-                                        if hasattr(contact,
-                                                   'email') and contact.email:
+                                        if hasattr(contact, "email") and contact.email:
                                             self.state_store.add_seen_email(
-                                                contact.email)
+                                                contact.email
+                                            )
                             # Always mark as processed, even if we skipped it
                             if self.state_store and domain:
                                 self.state_store.add_seen_domain(domain)
@@ -406,7 +403,8 @@ class LeadOrchestrator:
                         continue
 
         logger.success(
-            f"Domain discovery complete: {len(self.domains)} valid domains found and {len(self.email_results)} email results collected"
+            f"Domain discovery complete: {len(self.domains)} valid domains "
+            f"found and {len(self.email_results)} email results collected"
         )
 
     def run_full_pipeline(self):
@@ -422,11 +420,10 @@ class LeadOrchestrator:
                 self.run_provider_search()
                 self.run_domain_discovery()
 
-                #only run this if the email_results is empty after processing domain discovery
+                # only run this if the email_results is empty after processing domain discovery
                 if not self.email_results:
                     self.run_email_discovery()
-                logger.success(
-                    "Lead generation pipeline completed successfully")
+                logger.success("Lead generation pipeline completed successfully")
 
         except KeyboardInterrupt:
             logger.warning("Pipeline interrupted by user")

@@ -1,52 +1,53 @@
 """Hunter.io email finder implementation."""
+
+from typing import Optional, Dict, List
 import requests
-from typing import Optional, Dict, List, Any
 from leadgen.utils.logging import logger
 from leadgen.utils.proxy import ProxyManager
 from leadgen.config.loader import ConfigLoader
 from leadgen.config.models import AppConfig
-from .base import BaseFinder, FinderError
+from .base import BaseFinder
 from ..models.email_result import EmailResult, Contact
 
 
 class HunterFinder(BaseFinder):
     """Hunter.io email discovery service."""
-    
+
     BASE_URL = "https://api.hunter.io/v2/domain-search"
-    
+
     @property
     def name(self) -> str:
         return "hunter"
-    
-    def find_email(self, domain: str, proxy: Optional[Dict[str, str]] = None) -> EmailResult:
+
+    def find_email(
+        self, domain: str, proxy: Optional[Dict[str, str]] = None
+    ) -> EmailResult:
         """Find emails for a domain using Hunter.io API."""
         config: AppConfig = ConfigLoader().load_config()
 
-        params = {"domain": domain, "api_key": self.api_key,"department": config.hunter_department or "executive"}
-        
+        params = {
+            "domain": domain,
+            "api_key": self.api_key,
+            "department": config.hunter_department or "executive",
+        }
+
         try:
-            response = ProxyManager().safe_request("get",
-                self.BASE_URL,
-                params=params,
-                proxies=proxy,
-                timeout=10
+            response = ProxyManager().safe_request(
+                "get", self.BASE_URL, params=params, proxies=proxy, timeout=10
             )
-            
+
             response.raise_for_status()
             data = response.json()
-            
+
             # Extract emails from Hunter.io response
             logger.debug(f"Hunter.io returns {data} for email {domain}")
-            
+
             contacts = self._parse_email_data(data)
-            
+
             return EmailResult(
-                domain=domain,
-                emails=contacts,
-                finder=self.name,
-                success=True
+                domain=domain, emails=contacts, finder=self.name, success=True
             )
-            
+
         except requests.HTTPError as e:
             error_msg = f"Hunter.io API error: {e}"
             return EmailResult(
@@ -54,7 +55,7 @@ class HunterFinder(BaseFinder):
                 emails=[],
                 finder=self.name,
                 success=False,
-                error=error_msg
+                error=error_msg,
             )
         except requests.RequestException as e:
             error_msg = f"Network error contacting Hunter.io: {e}"
@@ -63,7 +64,7 @@ class HunterFinder(BaseFinder):
                 emails=[],
                 finder=self.name,
                 success=False,
-                error=error_msg
+                error=error_msg,
             )
         except Exception as e:
             error_msg = f"Unexpected error in Hunter search: {e}"
@@ -72,16 +73,15 @@ class HunterFinder(BaseFinder):
                 emails=[],
                 finder=self.name,
                 success=False,
-                error=error_msg
+                error=error_msg,
             )
-        
-        
+
     def _parse_email_data(self, data: dict) -> List[Contact]:
         """
         Parse Hunter.io / email finder JSON and return Contact objects
         """
         contacts = []
-    
+
         email_data = data.get("data", {})
         company_name = email_data.get("organization") or ""
 
@@ -94,7 +94,7 @@ class HunterFinder(BaseFinder):
                 name=f"{first_name} {last_name}".strip(),
                 email=email_entry.get("value", ""),
                 company_name=company_name,
-                position=email_entry.get("position", "")
+                position=email_entry.get("position", ""),
             )
             contacts.append(contact)
 

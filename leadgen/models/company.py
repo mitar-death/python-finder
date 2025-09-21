@@ -1,12 +1,15 @@
 """Company data model."""
+
 from dataclasses import dataclass
 from typing import Optional
 from urllib.parse import urlparse
+from ..utils.domain import DomainResolver
 
 
 @dataclass
 class Company:
     """Represents a company found by a search provider."""
+
     id: str
     name: str
     url: Optional[str] = None
@@ -21,8 +24,6 @@ class Company:
                 parsed = urlparse(self.url)
                 extracted_domain = parsed.netloc
 
-                # Only use extracted domain if it's not a provider domain
-                from ..utils.domain import DomainResolver
                 resolver = DomainResolver()
                 if resolver._is_valid_business_domain(extracted_domain):
                     self.domain = extracted_domain

@@ -2,11 +2,12 @@ import json
 import csv
 from pathlib import Path
 from typing import List, Optional, Set
-from openpyxl import Workbook
+from openpyxl import load_workbook, Workbook
 from ..models.company import Company
 from ..models.email_result import EmailResult
 from ..config.models import OutputConfig
 from ..utils.logging import logger
+from ..utils.domain import DomainResolver
 
 
 class OutputManager:
@@ -50,7 +51,9 @@ class OutputManager:
     def _save_companies(self, companies: List[Company]):
         """Save company data based on configured format."""
         if self.config.format.lower() in {"jsonl", "json"}:
-            self._save_jsonl([c.to_dict() for c in companies], self.config.companies_file)
+            self._save_jsonl(
+                [c.to_dict() for c in companies], self.config.companies_file
+            )
         elif self.config.format.lower() == "csv":
             self._save_csv([c.to_dict() for c in companies], self.config.companies_file)
         else:
@@ -60,10 +63,12 @@ class OutputManager:
 
     def _save_domains(self, companies: List[Company]):
         """Extract unique valid domains from companies."""
-        from ..utils.domain import DomainResolver
-
         resolver = DomainResolver()
-        domains = {c.domain for c in companies if c.domain and resolver._is_valid_business_domain(c.domain)}
+        domains = {
+            c.domain
+            for c in companies
+            if c.domain and resolver._is_valid_business_domain(c.domain)
+        }
         self._save_domains_set(domains, self.config.domains_file)
 
     def _save_domains_filtered(self, domains: Set[str]):
@@ -103,7 +108,10 @@ class OutputManager:
         emails_list = []
         for r in email_results:
             if r.success and r.emails:
-                emails_cleaned = [ {k: v for k, v in e.to_dict().items() if k != "domain"} for e in r.emails ]
+                emails_cleaned = [
+                    {k: v for k, v in e.to_dict().items() if k != "domain"}
+                    for e in r.emails
+                ]
                 emails_list.extend(emails_cleaned)
 
         if not emails_list:
@@ -133,10 +141,10 @@ class OutputManager:
             return
         file_path = self.output_dir / f"{filename}.csv"
         fieldnames = sorted({k for d in data for k in d.keys()})
-        
+
         # Check if file exists and has content to avoid duplicate headers
         file_exists = file_path.exists() and file_path.stat().st_size > 0
-        
+
         with open(file_path, "a", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             if not file_exists:
@@ -157,8 +165,6 @@ class OutputManager:
         if not data:
             return
         file_path = self.output_dir / f"{filename}.xlsx"
-        from openpyxl import load_workbook, Workbook
-
         if file_path.exists():
             wb = load_workbook(file_path)
             ws = wb.active
