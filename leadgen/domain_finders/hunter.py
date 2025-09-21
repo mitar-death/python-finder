@@ -49,6 +49,9 @@ class HunterDomainFinder(BaseDomainFinder):
 
             data = response.json()
 
+            # Debug logging for problematic responses
+            logger.debug(f"Hunter domain finder response for {company.name}: {data}")
+            
             # Extract emails from Hunter.io response
             return data
 
